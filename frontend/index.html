@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <title>Full Stack - Producto 1</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+  <!-- Nuestros archivos -->
+  <link rel="stylesheet" href="./css/styles.css">
+  <script defer src="./js/app.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <!-- Logo a la izquierda -->
+    <a class="navbar-brand" href="#" onclick="goSemsList()">
+      <img src="./img/Logo-1.png" width="180" height="26" alt="">
+    </a>
+
+    <!-- Botón de hamburguesa para dispositivos móviles -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">INICIO</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">PERFIL</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">SUPPORT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">CONTACTO</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- SubHero -->
+  <div class="body-hero hero-section mb-5">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container-asignaturas">
+        <div id="dashboardHeader">
+          <h1 class="display-4 text-center">_Semestres</h1>
+          <p class="lead text-center">Organiza tu <span style="font-weight: bold;">curso</span></p>
+          <button id="newSemBtn" class="custom-btn" onclick="openSemForm()">+ SEMESTRE</button>
+        </div>
+        <div id="semHeader" class="d-none">
+          <h1 class="display-4 text-center">_Asignaturas</h1>
+          <p class="lead text-center">Organiza tu <span style="font-weight: bold;">semestre</span></p>
+          <span id="semSlogan" class="text-center">
+            Lo mejor sería que tus asignaturas no llegaran a la derecha del todo, pero si alguna cae allí...
+            vuelve a la
+            izquierda y no te desanimes!.</span><br>
+          <button id="newSubjectBtn" class="custom-btn" onclick="openSubjectForm(0)">+ ASIGNATURA</button>
+          <div id="semHeader" class="d-none"></div>
+          <button id="newSubjectBtn" class="custom-btn-4" onclick="goSemsList()">
+            < VOLVER AL INICIO</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div id="dashboardHeader" class="text-center">
+    <h1>_Semestres</h1>
+    <button id="newSemBtn" class="custom-btn" data-bs-toggle="modal" data-bs-target="#semesterModal">+ SEMESTRE</button>
+  </div>
+  <div id="semHeader" class="text-center d-none">
+    <h1>_Asignaturas</h1>
+    <button id="newSubjectBtn" class="custom-btn" onclick="openSubjectForm(0)">+ ASIGNATURA</button>
+  </div> -->
+
+  <div id="semestersList" class="container d-flex flex-wrap"></div>
+
+  <div id="semesterPage" class="container d-none c-d2">
+    <div id="pendientes-zone" class="zone" data-status="0">
+      <h3>Pendientes</h3>
+      <div id="pendientesList" class=" d-flex flex-wrap"></div>
+    </div>
+    <div class="body-bg draggable-container m-2">
+      <div class="section dctilte" id="empezadas-column" data-status="1">
+        <h3>Empezadas</h3>
+        <button class="custom-btn-dg" onclick="openSubjectForm(1)">+ ASIGNATURA</button>
+        <div id="empezadasList"></div>
+      </div>
+
+      <div class="section dctilte" id="aprobadas-column" data-status="2">
+        <h3>Aprobadas</h3>
+        <button class="custom-btn-dg" onclick="openSubjectForm(2)">+ ASIGNATURA</button>
+        <div id="aprobadasList"></div>
+      </div>
+
+      <div class="section dctilte" id="suspendidas-column" data-status="3">
+        <h3>Suspendidas</h3>
+        <button class="custom-btn-dg" onclick="openSubjectForm(3)">+ ASIGNATURA</button>
+        <div id="suspendidasList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2023 _KanbansApp - Jack X Team</p>
+    </div>
+  </footer>
+
+  <!-- Modals -->
+  <div id="semesterModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 id="semModalTitle" class="modal-title text-center">Nuevo semestre</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form class="was-validated" id="newSemForm" onsubmit="return handleSemForm(event, this)">
+          <input type="hidden" id="semId" name="semId">
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="semName" placeholder="Nombre" name="semName" required>
+                <label for="semName">Nombre</label>
+                <div class="invalid-feedback">El nombre es necesario.</div>
+              </div>
+              <div class="form-floating">
+                <input type="number" class="form-control" id="semYear" placeholder="Año" name="semYear" min="1900"
+                  max="2099" required>
+                <label for="semYear">Año</label>
+                <div class="invalid-feedback">El año es necesario.</div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <div class="form-floating">
+                <input type="date" class="form-control" id="semStart" placeholder="Inicio" name="semStart" required>
+                <label for="semStart">Inicio</label>
+                <div class="invalid-feedback">La fecha de inicio es necesaria.</div>
+              </div>
+              <div class="form-floating">
+                <input type="date" class="form-control" id="semEnd" placeholder="Año" name="semEnd" required>
+                <label for="semEnd">Final</label>
+                <div class="invalid-feedback">La fecha de finalización es necesaria.</div>
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea class="form-control" id="semDescrip" name="semDescrip"
+                placeholder="Aquí la descripción"></textarea>
+              <label for="semDescrip">Descripción</label>
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="form-floating">
+                <input type="color" class="form-control" id="semColor" placeholder="Color" name="semColor">
+              </div>
+              <div class="form-floating">
+                <select class="form-select" id="semType" name="semType" required>
+                  <option value="1">Grado</option>
+                  <option value="2">Máster</option>
+                  <option value="3">Doctorado</option>
+                </select>
+                <label for="semType">Tipo</label>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="semTutor" name="semTutor" checked>
+                <label class="form-check-label" for="mySwitch">Tutorizado</label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Aceptar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="subjectModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="subjModalTitle" class="modal-title">Nueva asignatura</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form class="was-validated" id="subjectForm" onsubmit="return handleSubjectForm(event, this)">
+          <input type="hidden" name="subjId" id="subjId">
+          <input type="hidden" name="subjSemId" id="subjSemId">
+          <input type="hidden" name="subjStatus" id="subjStatus">
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <div class="form-floating">
+                <input type="text" class="form-control" id="subjectName" placeholder="Nombre" name="subjectName"
+                  required>
+                <label for="subjectName">Nombre</label>
+                <div class="invalid-feedback">El nombre es necesario.</div>
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea class="form-control" id="subjectDescrip" name="subjectDescrip"
+                placeholder="Aquí la descripción"></textarea>
+              <label for="subjectDescrip">Descripción</label>
+            </div>
+            <div class="input-group mb-3">
+              <label for="subjectDifficulty">Dificultad</label>
+              <input id="subjectDifficulty" name="subjectDifficulty" type="range" min="1" max="10" value="5"
+                class="w-100">
+            </div>
+            <div class="input-group mb-3">
+              <div class="form-floating">
+                <input type="number" class="form-control" name="subjectGrade" id="subjectGrade">
+                <label for="subjectGrade">Nota</label>
+              </div>
+              <div class="form-floating">
+                <div class="form-check form-switch m-3">
+                  <input type="checkbox" class="form-check-input" name="subjectLike" id="subjectLike">
+                  <label for="subjectLike">Me gusta</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Aceptar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de confirmación para el borrado de semestres o asignaturas -->
+  <div class="modal" id="confirmDelete">
+    <div class="modal-dialog delete-modal">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Eliminar información</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          Estás a punto de eliminar <span id="toDeleteName" class="bold"></span> y toda su
+          información asociada.
+          Esta acción no se puede deshacer.
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" onclick="deleteConfirmed()">ELIMINAR</button>
+          <button type="button" class="btn" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
