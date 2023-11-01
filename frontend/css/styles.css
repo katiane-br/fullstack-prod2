@@ -1,0 +1,472 @@
+body {
+    font-family: 'Poppins', sans-serif; /* Aplica Poppins a todo el cuerpo del documento */
+    background-color: #e7eaf2;
+}
+
+.body-bg .body-hero {
+    background-color: #e7eaf2;
+    padding: 80px;
+    color: #000;
+    margin-bottom: 48px;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif; /* Aplica tipografia Poppins a los encabezados */
+}
+
+h3 {
+    font-weight: 200;
+}
+
+/* Menu navegacion */
+.nav-color {
+    background-color: white;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #000;
+}
+
+.navbar-brand {
+    margin-left: 24px;
+}
+
+/* Estilo para la sección de héroe */
+.hero-section {
+    position: relative;
+    background-image: url('../img/Hero-1.jpg'); /* La ruta de tu imagen */
+    background-size: cover;
+    background-position: center;
+    height: 600px; /* Ajusta la altura según sea necesario */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section h1 {
+    font-weight: 100; /* Poppins Light */
+    font-size: 8rem; /* Ajusta el tamaño según sea necesario */
+    color: #000;
+    margin-bottom: 0px; /* Ajusta el margen inferior según sea necesario */
+}
+
+.hero-section p {
+    font-weight: 100; /* Poppins Light */
+    font-size: 3rem; /* Ajusta el tamaño según sea necesario */
+    color: #000;
+    margin-bottom: 20px; /* Ajusta el margen inferior según sea necesario */
+}
+
+/* Estilo para el botón personalizado con color de fondo #ef3054 */
+.custom-btn {
+    background-color: #ef3054;
+    color: #fff; /* Color del texto del botón */
+    border: none;
+    border-radius: 3px;
+    text-decoration: none; /* Quitar subrayado del texto */
+    padding: 10px 20px; /* Ajustar el relleno para agregar margen a los lados */
+    display: inline-block; /* Para que el margen lateral funcione correctamente */
+    margin: 10px; /* Ajustar el margen según sea necesario */
+}
+
+.custom-btn:hover {
+    background-color: #F14161;
+}
+
+.custom-btn-2 {
+    background-color: #ef3054;
+    color: #fff; /* Color del texto del botón */
+    font-size: 14px;
+    font-weight: 300;
+    border: none;
+    border-radius: 3px;
+    text-decoration: none; /* Quitar subrayado del texto */
+    padding: 10px 20px; /* Ajustar el relleno para agregar margen a los lados */
+    display: inline-block; /* Para que el margen lateral funcione correctamente */
+    margin: 10px; /* Ajustar el margen según sea necesario */
+}
+
+.custom-btn-2:hover {
+    background-color: #F14161;
+}
+
+.custom-btn-3 {
+    border-radius: 3px;
+    text-decoration: none; /* Quitar subrayado del texto */
+    padding: 10px 20px; /* Ajustar el relleno para agregar margen a los lados */
+    margin: 10px; /* Ajustar el margen según sea necesario */
+}
+
+.custom-btn-4 {
+    background-color: #ffba08;
+    color: #fff; /* Color del texto del botón */
+    border: none;
+    border-radius: 3px;
+    text-decoration: none; /* Quitar subrayado del texto */
+    padding: 10px 20px; /* Ajustar el relleno para agregar margen a los lados */
+    display: inline-block; /* Para que el margen lateral funcione correctamente */
+    margin: 10px; 
+}
+
+.custom-btn-5 {
+    background-color: #464f69;
+    color: #fff; /* Color del texto del botón */
+    border: none;
+    border-radius: 3px;
+    text-decoration: none; /* Quitar subrayado del texto */
+    padding: 10px 20px; /* Ajustar el relleno para agregar margen a los lados */
+    display: inline-block; /* Para que el margen lateral funcione correctamente */
+    margin: 10px; 
+}
+/* Backgrounds para las targetas */
+.custom-card {
+    text-align: center;
+}
+
+.card-1 {
+    background-color: #adc3b0;
+    border-radius: 6px;}
+.card-2 {
+    background-color: #ffba08;
+    border-radius: 6px;}
+.card-3 {
+    background-color: #fab482;
+    border-radius: 6px;}
+.card-4 {
+    background-color: #c398b7;
+    border-radius: 6px;}
+.card-5 {
+    background-color: #ffe66d;
+    border-radius: 6px;}
+.card-6 {
+    background-color: #d8dc6a;
+    border-radius: 6px;}
+
+.card {
+    position: relative;
+}
+
+.btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+}
+
+/* Estilo para el modal */
+.modal-content {
+    background-color: #a0abcc; /* Color de fondo del modal */
+}
+
+.modal-header {
+    background-color: #a0abcc; /* Color de fondo del encabezado del modal */
+    color: #fff; /* Color del texto del encabezado del modal */
+}
+
+.modal-title {
+    font-size: 1.5rem; /* Tamaño del texto del título del modal */
+}
+
+.modal-body {
+    padding: 20px; /* Relleno del cuerpo del modal */
+    background-color: #a0abcc;
+}
+
+.modal-footer {
+    background-color: #f8f9fa; /* Color de fondo del pie del modal */
+}
+
+.modal-header .btn-close {
+    margin-top: 30px; /* Ajusta el valor según tus preferencias */
+    margin-right: 30px; /* Ajusta el valor según tus preferencias */
+}
+
+/* Estilo para los campos del formulario dentro del modal */
+.modal-body input,
+.modal-body select,
+.modal-body textarea {
+    margin-bottom: 15px; /* Espaciado entre los campos del formulario */
+    background-color: #fff;
+    border: none;
+    border-radius: 3px;
+    color: #000;
+
+}
+
+/* Estilo para el botón de enviar en el formulario */
+.modal-body button.btn-primary {
+    background-color: #ef3054; /* Color de fondo del botón */
+    border: none; /* Sin borde */
+}
+
+.modal-body button.btn-primary:hover {
+    background-color: #F14161; /* Cambio de color al pasar el ratón sobre el botón */
+}
+
+.container-asignaturas {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 200px; /* Ajusta la altura según sea necesario */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+/* Modificar estilos de los campos del formulario dentro del modal */
+.modal-body input:focus,
+.modal-body select:focus,
+.modal-body textarea:focus {
+    border-color: #F14161; /* Cambiar el color del borde al hacer clic */
+    box-shadow: 0 0 5px rgba(239, 48, 84, 0.5); /* Agregar una sombra al hacer clic */
+    background-color: #464f69;
+    color:#fff;
+}
+
+
+
+
+/* Estilos del footer */
+.footer {
+    background-color: #ededea;
+    padding: 20px;
+    text-align: center;
+    border-radius: 3px;
+    margin-top: 60px;
+}
+
+.footer p {
+    color: #000;
+}
+
+/* Estilos Pagina Detalle */
+
+.container-asignaturas-dg {
+    padding: 0px;
+}
+
+
+.container-asignaturas-dg p {
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.container-asignaturas-dg h3 {
+    font-size: 28px;
+    font-weight: 200;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+
+}
+
+.custom-btn-dg {
+    width: 100%;
+    border: none;
+    padding: 12px;
+    background-color: transparent;
+}
+
+#empezadas-column {
+    background-color: #c398b7;
+    border-radius: 6px;
+}
+
+#empezadas-column .custom-btn-dg{
+    background-color: #9A5B88;
+}
+
+#empezadas-column .custom-btn-dg:hover{
+    background-color: #B47EA4;
+}
+
+#aprobadas-column {
+    background-color: #adc3b0;
+    border-radius: 6px;
+}
+
+#aprobadas-column .custom-btn-dg{
+    background-color: #688D6D;
+}
+
+#aprobadas-column .custom-btn-dg:hover{
+    background-color: #7EA082;
+}
+
+#suspendidas-column {
+    background-color: #d8dc6a;
+    border-radius: 6px;
+}
+
+#suspendidas-column .custom-btn-dg{
+    background-color: #A1A527;
+}
+
+#suspendidas-column .custom-btn-dg:hover{
+    background-color: #CBD039;
+}
+
+.custom-card-dg {
+    padding: 12px;
+    margin: 10px;
+}
+
+.card-dragging {
+    opacity: 0.5; /* Hace que la tarjeta sea semi-transparente mientras se arrastra */
+    border: 2px dashed #333; /* Puede ayudar a visualizar el área de destino */
+}
+
+.custom-btn-card-dg {
+    border-radius: 3px;
+    color:#FFFFFF;
+    box-shadow: none;
+    border: none;
+    background-color: #ef3054;
+    font-size: 14px;
+    padding: 6px;
+    width: 50%;
+}
+
+.custom-btn-card-dg :hover {
+    background-color: #fff;
+}
+
+.custom-btn-card2-dg {
+    margin-top: 10px;
+    border-radius: 3px;
+    box-shadow: none;
+    border: none;
+    background-color: #464f69;
+    font-size: 14px;
+    padding: 4px;
+    width: 80%;
+}
+
+.parrafo {
+    background-color: #fff;
+    padding: 1rem;
+
+}
+/* ======= DRAGABBLE ======*/
+.body-bg {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; /* Espacio entre las columnas */
+}
+
+.draggable-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.section {
+    background-color: #e7eaf2;
+    padding-top: 24px;
+    border-radius: 5px;
+    width: 30%;
+}
+.zone {
+    background-color: #a0abcc;
+    margin: 22px;
+    padding: 24px;
+    min-height: 200px;
+    border-radius: 6px;
+}
+
+.draggable-container {
+    text-align: center;
+    font-weight: 200;
+    margin: auto; /* Esto centrará el contenedor horizontalmente */
+    max-width: 1400px; /* Ajusta el valor según tus necesidades */
+
+}
+
+.card {
+    margin: 20px;
+    border: none;
+}
+
+.card-text {
+    font-size: 14px;
+    font-weight: 300;
+    border: none;
+}
+
+.semester-card {
+    min-width: 300px;
+}
+
+.card-header {
+    background-color: #000;
+}
+
+.parrafo {
+    cursor: grab;
+    max-width: 400px;
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+.bold {
+    font-weight: bold;
+}
+.dragover {
+    /*  Make it glow with light */
+    box-shadow: 0 0 10px 0 #ff0000;
+}
+
+.textshadow {
+    text-shadow: 1px 1px #FFFFFF, -1px 1px #FFFFFF, 1px -1px #FFFFFF, -1px -1px #FFFFFF;
+}
+
+.modal {
+    border-radius: 12px;
+}
+
+.modal-dialog {
+    border-radius: 12px;
+    border: none;
+    background-color: #a0abcc;
+}
+
+.modal-content {
+    border-radius: 12px;
+    border: none;
+    background-color: #a0abcc;
+}
+
+.modal-header {
+    border-radius: 0px;
+    border: none;
+    background-color: #a0abcc;
+    text-align: center;
+}
+
+.modal-title {
+    text-align: center;
+}
+
+.modal-body {
+    border-radius: 0px;
+    border: none;
+    background-color: #a0abcc;
+}
+
+.modal-footer {
+    border-radius: 0px;
+    border: none;
+    background-color: #a0abcc;
+}
+
+.semesterList {
+    background-color: #000;
+}
