@@ -8,7 +8,7 @@ const semesterSchema = new mongoose.Schema({
         unique: true
     },
     year: {
-        type: Number,
+        type: Date,
         required: true
     },
     start: {
