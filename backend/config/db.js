@@ -1,10 +1,14 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+// Carga las variables de entorno desde el archivo .env
+dotenv.config();
 
 const conectarDB = async () => {
     try {
-        const dbUser = "JackX"; // Tu nombre de usuario de MongoDB
-        const dbPassword = "%01112023JackX%"; // Tu contraseña de MongoDB
-        const dbName = "uptask"; // Nombre de tu base de datos
+        const dbUser = process.env.DB_USER;
+        const dbPassword = process.env.DB_PASSWORD;
+        const dbName = process.env.DB_NAME;
 
         // Formatea el password para que sea URL codificado
         const encodedPassword = encodeURIComponent(dbPassword);

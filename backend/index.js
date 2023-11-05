@@ -1,14 +1,13 @@
-import express from 'express'
+import express from 'express';
+import dotenv from 'dotenv';
 import conectarDB from './config/db.js';
 
 const app = express();
+dotenv.config();
 conectarDB();
 
-app.get('/', function (req, res) {
-  res.send('Hello World Jack X')
-})
-
+const PORT = process.env.PORT || 4000;
 
 app.listen(3000, () => {
-  console.log('Servidor up en puerto 3000')
+  console.log('Servidor up en puerto 4000')
 })
