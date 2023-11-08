@@ -75,6 +75,12 @@ async function getData() {
     return data.data;
 }
 
+/**
+ * Esta función pide al server solo los mínimos datos necesarios para crear las
+ * cards de los semestres.
+ * No es necesario que cargue todos los datos de los semestres.
+ * @returns {Array} - Array con los semestres de la base de datos
+ */
 async function getSemesters() {
     const dataRaw = await fetch('/db?semesters', {
         method: 'POST',
@@ -84,22 +90,8 @@ async function getSemesters() {
                 semesters {
                     id
                     name
-                    year
-                    start
-                    end
                     descrip
                     color
-                    kind
-                    tutorized
-                    subjects {
-                        id
-                        name
-                        descrip
-                        status
-                        difficulty
-                        grade
-                        like
-                    }
                 }
             }`
         })
