@@ -10,34 +10,47 @@ import 'dotenv/config';
 
 //schema
 const typeDefs = `#graphql
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-  # This "Task" type defines the queryable fields for every book in our data source.
-  type Task {
-    id:ID!
-    name:String!
-    description:String
-    days:Int
+  type Subject {
+    id: ID!
+    name: String!
+    descrip: String
+    status: Int!
+    difficulty: Int!
+    grade: Int!
+    like: Int!
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "tasks" query returns an array of zero or more Tasks (defined above).
+  type Semester {
+    id: ID!
+    name: String!
+    year: Int!
+    start: String!
+    end: String!
+    descrip: String
+    color: String!
+    kind: Int!
+    tutorized: Boolean
+    subjects: [Subject]
+  }
+
   type Query {
-    getTasks: [Task]
-    getTaskById(id: ID!): Task
+    getSemesters: [Semester]
+    getSemesterById(id: ID!): Semester
+    getSubjects: [Subject]
+    getSubjectById(id: ID!): Subject
   }
 `;
 
 // Resolvers define how to fetch the types defined in your schema.
-// This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-    getTasks: () => taskdata,
-    getTaskById: (obj, {id}) => taskdata.find(task => task.id === id),
+    getSemesters: () => allData.semesters,
+    getSemesterById: (obj, {id}) => allData.semesters.find(semester => semester.id === id),
+    getSubjects: () => allData.subjects,
+    getSubjectById: (obj, {id}) => allData.subjects.find(subject => subject.id === id),
   },
 };
-
 
 const app = express();
 const httpServer = http.createServer(app);

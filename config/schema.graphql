@@ -1,0 +1,44 @@
+type Subject {
+  id: ID!
+  name: String!
+  descrip: String
+  status: Int!
+  difficulty: Int!
+  grade: Int!
+  like: Int!
+}
+
+type Semester {
+  id: ID!
+  name: String!
+  year: Int!
+  start: String!
+  end: String!
+  descrip: String
+  color: String!
+  kind: Int!
+  tutorized: Boolean
+  subjects: [Subject]
+}
+
+type Query {
+  getSemesters: [Semester]
+  getSemesterById(id: ID!): Semester
+  getSubjects: [Subject]
+  getSubjectById(id: ID!): Subject
+}
+
+type Mutation {
+    createSemester(
+        name: String!, year: Int!, start: String!, end: String!, descrip: String, color: String!, kind: Int!, tutorized: Boolean): Semester
+    updateSemester(
+        id: ID!, name: String, year: Int, start: String, end: String, descrip: String, color: String, kind: Int, tutorized: Boolean): Semester
+    deleteSemester(
+        id: ID!): Semester
+    createSubject(
+        name: String!, descrip: String, status: Int!, difficulty: Int!, grade: Int!, like: Int!): Subject
+    updateSubject(
+        id: ID!, name: String, descrip: String, status: Int, difficulty: Int, grade: Int, like: Int): Subject
+    deleteSubject(
+        id: ID!): Subject
+}
