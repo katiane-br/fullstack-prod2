@@ -1,7 +1,7 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import taskdata from './data/tasks_data.json' assert { type: "json" };
-import 'dotenv/config'
+import 'dotenv/config';
 
 //schema
 const typeDefs = `#graphql
