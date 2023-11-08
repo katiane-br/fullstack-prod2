@@ -38,7 +38,69 @@ function hideMe(...elems) { elems.forEach(e => e.classList.add('d-none')); }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-// DATA
+// DATA - REAL DATABASE FUNCTIONS
+/**
+ * Obtiene los datos de la base de datos.
+ * @returns {Object} - Objeto con los datos de la base de datos
+ */
+async function getData() {
+    const dataRaw = await fetch('/db', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `{
+                semesters {
+                    id
+                    name
+                    year
+                    start
+                    end
+                    descrip
+                    color
+                    kind
+                    tutorized
+                    subjects {
+                        id
+                        name
+                        descrip
+                        status
+                        difficulty
+                        grade
+                        like
+                    }
+                }
+            }`
+        })
+    });
+    const data = await dataRaw.json();
+    return data.data;
+}
+
+async function getSemesters() {
+    return (await getData()).semesters;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// DATA - FAKE FUNCTIONS
 // Funciones que simulan acceder a una base de datos para leer,escribir, editar
 // y borrar datos (CRUD).
 // Cuando estas funciones accedan a una BD real, el resto del programa no
@@ -84,47 +146,17 @@ async function createData(info) {
     }
 }
 
-/**
- * Obtiene los datos de la base de datos.
- * @returns {Object} - Objeto con los datos de la base de datos
- */
-async function getData() {
-    // Fake data from data/data.json
-    // const dataRaw = await fetch('./data/data.json');
-    // const data = await dataRaw.json();
-
-    const dataRaw = await fetch('/db', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            query: `{
-                semesters {
-                    id
-                    name
-                    year
-                    start
-                    end
-                    descrip
-                    color
-                    kind
-                    tutorized
-                    subjects {
-                        id
-                        name
-                        descrip
-                        status
-                        difficulty
-                        grade
-                        like
-                    }
-                }
-            }`
-        })
-    });
-    const data = await dataRaw.json();
-    console.log(data);
-    return data.data;
-}
+// FUNCIÓN FALSA COMENTADA - YA EXISTE LA FUNCIÓN REAL
+// /**
+//  * Obtiene los datos de la base de datos.
+//  * @returns {Object} - Objeto con los datos de la base de datos
+//  */
+// async function getData() {
+//     // Fake data from data/data.json
+//     const dataRaw = await fetch('./data/data.json');
+//     const data = await dataRaw.json();
+//     return data;
+// }
 
 /**
  * Obtiene un semestre por su id.
@@ -243,6 +275,17 @@ async function deleteData(info) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -291,7 +334,7 @@ async function deleteConfirmed() {
 
     if (what === "semester") {
         await deleteData({ semId: id });
-        refreshSemesters(data.semesters);
+        await refreshSemesters();
 
     } else if (what === "subject") {
         await deleteData({ subjId: id });
@@ -414,7 +457,7 @@ async function handleSemForm(ev, form) {
         await createData({ sem });
     }
 
-    refreshSemesters(data.semesters);
+    await refreshSemesters();
     return false;
 }
 
@@ -602,7 +645,8 @@ function goSemsList() {
  * Esto se hace para que se actualice la lista de semestres cuando se crea uno
  * nuevo, o bien se actualiza o se borra.
  */
-function refreshSemesters(semesters) {
+async function refreshSemesters() {
+    const semesters = await getSemesters();
     semestersList.innerHTML = '';
     semesters.forEach(sem => {
         semestersList.innerHTML += createSemCard(sem);
@@ -803,7 +847,7 @@ const zones = [pendientesZone, empezadasColumn, aprobadasColumn,
 async function init() {
     applyListeners();
     data = await getData();
-    refreshSemesters(data.semesters);
+    await refreshSemesters();
 }
 ////////////////////////////////////////////////////////////////////////////////
 // Todo el código anterior no hace nigún cambio en el DOM. Solo define variables
