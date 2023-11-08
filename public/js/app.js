@@ -100,51 +100,96 @@ async function getSemesters() {
     return data.data.semesters;
 }
 
-//  TODAVÍA NO FUNCIONARÁ, HASTA QUE NO SE CREEN LOS SEMESTRES NUEVOS DENTRO DE
-// LA BASE DE DATOS (ACTUALMENTE SE CREAN SOLO EN LA VARIABLE 'data' QUE
-// DESAPARECE AL FINAL DE LA FUNCIÓN DE CREACIÓN)
-// /**
-//  * Obtiene un semestre por su id.
-//  */
-// async function getSemesterById(id) {
-//     // const data = await getData();
-//     // // Forzar a que id sea una string
-//     // id = String(id);
-//     // return data.semesters.find(sem => sem.id === id);
+/**
+ * Obtiene un semestre por su id.
+ */
+async function getSemesterById(id) {
+    // const data = await getData();
+    // // Forzar a que id sea una string
+    // id = String(id);
+    // return data.semesters.find(sem => sem.id === id);
 
-//     const dataRaw = await fetch('/db?getSemesterById', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify({
-//             query: `{
-//                 getSemesterById(id: "${id}") {
-//                     id
-//                     name
-//                     year
-//                     start
-//                     end
-//                     descrip
-//                     color
-//                     kind
-//                     tutorized
-//                     subjects {
-//                         id
-//                         name
-//                         descrip
-//                         status
-//                         difficulty
-//                         grade
-//                         like
-//                     }
-//                 }
-//             }`
-//         })
-//     });
-//     const data = await dataRaw.json();
-//     return data.data.getSemesterById;
-// }
+    const dataRaw = await fetch('/db?getSemesterById', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `{
+                getSemesterById(id: "${id}") {
+                    id
+                    name
+                    year
+                    start
+                    end
+                    descrip
+                    color
+                    kind
+                    tutorized
+                    subjects {
+                        id
+                        name
+                        descrip
+                        status
+                        difficulty
+                        grade
+                        like
+                    }
+                }
+            }`
+        })
+    });
+    const data = await dataRaw.json();
+    return data.data.getSemesterById;
+}
 
 
+/**
+ * Borra un semestre o asignatura de la base de datos.
+ */
+async function deleteData(info) {
+
+    const data = await getData();
+
+    if (info.semId) {
+        await deleteSemesterDB(info.semId);
+    }
+    if (info.subjId) {
+        // Delete subject by Id
+        await deleteSubjectDB(info.subjId);
+
+    }
+}
+
+async function deleteSemesterDB(id) {
+    const dataRaw = await fetch('/db?deleteSemester', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `mutation {
+                deleteSemester(id: "${id}") {
+                    id
+                }
+            }`
+        })
+    });
+    const data = await dataRaw.json();
+    return data.data.deleteSemester;
+}
+
+async function deleteSubjectDB(id) {
+    const dataRaw = await fetch('/db?deleteSubject', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `mutation {
+                deleteSubject(id: "${id}") {
+                    id
+                }
+            }`
+        })
+    });
+    const data = await dataRaw.json();
+    return data.data.deleteSubject;
+}
 
 
 
@@ -223,15 +268,16 @@ async function createData(info) {
 //     return data;
 // }
 
-/**
- * Obtiene un semestre por su id.
- */
-async function getSemesterById(id) {
-    const data = await getData();
-    // Forzar a que id sea una string
-    id = String(id);
-    return data.semesters.find(sem => sem.id === id);
-}
+// FUNCIÓN FALSA COMENTADA - YA EXISTE LA FUNCIÓN REAL
+// /**
+//  * Obtiene un semestre por su id.
+//  */
+// async function getSemesterById(id) {
+//     const data = await getData();
+//     // Forzar a que id sea una string
+//     id = String(id);
+//     return data.semesters.find(sem => sem.id === id);
+// }
 
 /**
  * Actualiza un semestre
@@ -318,27 +364,27 @@ async function updateSubject(subj) {
 }
 
 
-/**
- * Borra un semestre o asignatura de la base de datos.
- */
-async function deleteData(info) {
+// /**
+//  * Borra un semestre o asignatura de la base de datos.
+//  */
+// async function deleteData(info) {
 
-    const data = await getData();
+//     const data = await getData();
 
-    if (info.semId) {
-        // Delete semester by Id
-        console.log('Deleting semester', info.semId);
-        data.semesters = data.semesters.filter(sem => sem.id != info.semId);
-    }
-    if (info.subjId) {
-        // Delete subject by Id
-        console.log('Deleting subject', info.subjId);
-        data.semesters.forEach(sem =>
-            sem.subjects = sem.subjects.filter(
-                subj => subj.id != info.subjId)
-        );
-    }
-}
+//     if (info.semId) {
+//         // Delete semester by Id
+//         console.log('Deleting semester', info.semId);
+//         data.semesters = data.semesters.filter(sem => sem.id != info.semId);
+//     }
+//     if (info.subjId) {
+//         // Delete subject by Id
+//         console.log('Deleting subject', info.subjId);
+//         data.semesters.forEach(sem =>
+//             sem.subjects = sem.subjects.filter(
+//                 subj => subj.id != info.subjId)
+//         );
+//     }
+// }
 
 
 
