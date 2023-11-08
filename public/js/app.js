@@ -57,9 +57,9 @@ async function createData(info) {
         // las bases de datos. Se usa reduce para obtener el id más alto de los
         // semestres existentes y se le suma 1.
         const id = data.semesters.reduce((max, sem) => {
-            return sem.id > max ? sem.id : max;
+            return Number(sem.id) > max ? Number(sem.id) : max;
         }, 0) + 1;
-        info.sem.id = id;
+        info.sem.id = String(id);  // Cast to string
 
         data.semesters.push(info.sem);
     }
@@ -76,9 +76,9 @@ async function createData(info) {
             .map(sem => sem.subjects)
             .flat()
             .reduce((max, subj) => {
-                return subj.id > max ? subj.id : max;
+                return Number(subj.id) > max ? Number(subj.id) : max;
             }, 0) + 1;
-        info.subj.id = id;
+        info.subj.id = String(id);  // Cast to string
 
         sem.subjects.push(info.subj);
     }
@@ -90,16 +90,48 @@ async function createData(info) {
  */
 async function getData() {
     // Fake data from data/data.json
-    const dataRaw = await fetch('./data/data.json');
+    // const dataRaw = await fetch('./data/data.json');
+    // const data = await dataRaw.json();
+
+    const dataRaw = await fetch('/db', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `{
+                semesters {
+                    id
+                    name
+                    year
+                    start
+                    end
+                    descrip
+                    color
+                    kind
+                    tutorized
+                    subjects {
+                        id
+                        name
+                        descrip
+                        status
+                        difficulty
+                        grade
+                        like
+                    }
+                }
+            }`
+        })
+    });
     const data = await dataRaw.json();
-    return data;
+    console.log(data);
+    return data.data;
 }
 
 /**
  * Obtiene un semestre por su id.
  */
 async function getSemesterById(id) {
-    id = Number(id);
+    // Frozar a que id sea una string
+    id = String(id);
     return data.semesters.find(sem => sem.id === id);
 }
 
@@ -107,8 +139,9 @@ async function getSemesterById(id) {
  * Actualiza un semestre
  */
 async function updateSemester(sem) {
-    // Cast to numbers
-    sem.id = Number(sem.id);
+    // Cast to string
+    sem.id = String(sem.id);
+    // Cast to number
     sem.year = Number(sem.year);
 
     const semOld = await getSemesterById(sem.id);
@@ -134,7 +167,7 @@ async function updateSemester(sem) {
  * Luego busca la asignatura por su id en ese array.
  */
 async function getSubjectById(id) {
-    id = Number(id);
+    id = String(id);
     return data.semesters
         .map(sem => sem.subjects)
         .flat()
@@ -143,13 +176,13 @@ async function getSubjectById(id) {
 
 /**
  * Actualiza el estado de una asignatura.
- * @param {Number} id - Id de la asignatura
+ * @param {String} id - Id de la asignatura
  * @param {Number} status - Nuevo estado de la asignatura
  */
 async function updateSubjectStatus(id, status) {
 
-    // Cast to numbers
-    id = Number(id);
+    // Cast to correct types
+    id = String(id);
     status = Number(status);
 
     const subj = await getSubjectById(id);
@@ -165,8 +198,8 @@ async function updateSubjectStatus(id, status) {
  * Actualiza una asignatura en la base de datos.
  */
 async function updateSubject(subj) {
-    // Cast to numbers
-    subj.id = Number(subj.id);
+    // Cast to correct types
+    subj.id = String(subj.id);
     subj.status = Number(subj.status);
 
     const subjOld = await getSubjectById(subj.id);
@@ -178,7 +211,7 @@ async function updateSubject(subj) {
         subjOld.grade = subj.grade;
         subjOld.like = subj.like;
         subjOld.status = Number(subj.status);
-        subjOld.semId = Number(subj.semId);
+        subjOld.semId = String(subj.semId);
 
     } else {
         throw new Error(`Subject ${subj.id} not found`);
@@ -360,7 +393,7 @@ async function handleSemForm(ev, form) {
     // el semestre en la BD en vez de crear uno nuevo.
 
     const sem = {
-        id: Number(form.semId.value),
+        id: String(form.semId.value),
         name: form.semName.value,
         year: Number(form.semYear.value),
         start: form.semStart.value,
@@ -405,8 +438,8 @@ async function handleSubjectForm(ev, form) {
     // la asignatura en la BD en vez de crear una nueva.
 
     const subj = {
-        id: Number(form.subjId.value),
-        semId: Number(form.subjSemId.value),
+        id: String(form.subjId.value),
+        semId: String(form.subjSemId.value),
         name: form.subjectName.value,
         descrip: form.subjectDescrip.value,
         difficulty: form.subjectDifficulty.value,
@@ -579,10 +612,11 @@ function refreshSemesters(semesters) {
 /**
  * Muestra la página de asignaturas y oculta la lista de semestres.
  * También cambia el título y una palabra del eslogan.
- * @param {Number} id - Id del semestre que se quiere abrir
+ * @param {String} id - Id del semestre que se quiere abrir
  */
 async function openSem(id) {
-
+    // Cast to string
+    id = String(id);
     console.log('Opening sem', id);
 
     hideMe(dashboardHeader, semestersList);
@@ -671,7 +705,7 @@ function refreshSubjects(sem) {
  * Muestra el formulario de las asignaturas.
  * @param {Number} status - Estado de la asignatura que se quiere crear
  * (solo si se está creando).
- * @param {Number} id - Id de la asignatura que se quiere editar
+ * @param {String} id - Id de la asignatura que se quiere editar
  * (solo si se está editando).
  */
 async function openSubjectForm(status, id = null) {
@@ -679,6 +713,7 @@ async function openSubjectForm(status, id = null) {
     subjFormFields.semId.value = semesterPage.dataset.id;
 
     if (id) {
+        id = String(id);
         // Si existe un id, estamos editando una asignatura existente
         subjModalTitle.innerHTML = 'Editar asignatura';
         const subj = await getSubjectById(id);

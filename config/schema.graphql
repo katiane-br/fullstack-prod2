@@ -22,7 +22,7 @@ type Semester {
 }
 
 type Query {
-  getSemesters: [Semester]
+  semesters: [Semester]
   getSemesterById(id: ID!): Semester
   getSubjects: [Subject]
   getSubjectById(id: ID!): Subject

@@ -35,7 +35,7 @@ const typeDefs = `#graphql
   }
 
   type Query {
-    getSemesters: [Semester]
+    semesters: [Semester]
     getSemesterById(id: ID!): Semester
     getSubjects: [Subject]
     getSubjectById(id: ID!): Subject
@@ -45,7 +45,7 @@ const typeDefs = `#graphql
 // Resolvers define how to fetch the types defined in your schema.
 const resolvers = {
   Query: {
-    getSemesters: () => allData.semesters,
+    semesters: () => allData.semesters,
     getSemesterById: (obj, {id}) => allData.semesters.find(semester => semester.id === id),
     getSubjects: () => allData.subjects,
     getSubjectById: (obj, {id}) => allData.subjects.find(subject => subject.id === id),
