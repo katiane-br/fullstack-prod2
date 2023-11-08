@@ -1,81 +1,42 @@
-import { ApolloServer } from '@apollo/server';
-import { expressMiddleware } from '@apollo/server/express4';
-import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+// General imports
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
-import { allData } from './data/data.js';
 import 'dotenv/config';
+
+// Apollo imports
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+
+// Application imports
+// import { allData } from './data/data.js';
 import { dbConnection } from './config/config.js';
-import { dbtest } from './test/dbtest.js';
+// import { dbtest } from './test/dbtest.js';
+import resolvers from './graphql/resolvers.js';
+import typeDefs from './graphql/typeDefs.js';
 
-//schema
-const typeDefs = `#graphql
+// Constants
+const PORT = process.env.PORT || 4000;
 
-  type Subject {
-    id: ID!
-    name: String!
-    descrip: String
-    status: Int!
-    difficulty: Int
-    grade: Int
-    like: Boolean
-  }
-
-  type Semester {
-    id: ID!
-    name: String!
-    year: Int!
-    start: String!
-    end: String!
-    descrip: String
-    color: String!
-    kind: Int!
-    tutorized: Boolean
-    subjects: [Subject]
-  }
-
-  type Query {
-    semesters: [Semester]
-    getSemesterById(id: ID!): Semester
-    getSubjects: [Subject]
-    getSubjectById(id: ID!): Subject
-  }
-`;
-
-// Resolvers define how to fetch the types defined in your schema.
-const resolvers = {
-  Query: {
-    // semesters: () => allData.semesters,
-    semesters: () => dbtest(),
-    getSemesterById: (obj, {id}) => allData.semesters.find(semester => semester.id === id),
-    getSubjects: () => allData.subjects,
-    getSubjectById: (obj, {id}) => allData.subjects.find(subject => subject.id === id),
-  },
-};
-
+// Create main app
 const app = express();
 const httpServer = http.createServer(app);
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
-// Also, can have plugins
+// ApolloServer constructor
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
-
 await server.start();
 
 // Routes
 app.use(express.static('public'));
-
 dbConnection();
 app.use('/db', cors(), express.json(), expressMiddleware(server));
-app.get('/dbtest', dbtest);
+// app.get('/dbtest', dbtest);
 
 // Server startup
-const port = process.env.PORT || 4000;
-await new Promise(resolve => httpServer.listen({ port }, resolve));
-console.log(`🚀 Server ready at http://localhost:${port}`);
+await new Promise(resolve => httpServer.listen({ port: PORT }, resolve));
+console.log(`🚀 Server ready at http://localhost:${PORT}`);
