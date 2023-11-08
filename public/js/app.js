@@ -39,6 +39,75 @@ function hideMe(...elems) { elems.forEach(e => e.classList.add('d-none')); }
 ////////////////////////////////////////////////////////////////////////////////
 // DATA - REAL DATABASE FUNCTIONS
 /**
+ * Crea un nuevo semestre o asignatura en la base de datos.
+ * @param {Object} info - Objeto con la información del semestre o asignatura
+ */
+async function createData(info) {
+
+    // Create semester
+    if (info.sem) {
+        console.log('Creating semester', info.sem);
+        await createSemesterDB(info.sem);
+    }
+
+    // Create subject
+    if (info.subj) {
+        console.log('Creating subject', info.subj);
+        await createSubjectDB(info.subj);
+    }
+}
+
+async function createSemesterDB(sem) {
+    const dataRaw = await fetch('/db?createSemester', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `mutation {
+                createSemester(
+                    name: "${sem.name}",
+                    year: ${sem.year},
+                    start: "${sem.start}",
+                    end: "${sem.end}",
+                    descrip: "${sem.descrip}",
+                    color: "${sem.color}",
+                    kind: ${sem.type},
+                    tutorized: ${sem.tutorized}
+                ) {
+                    id
+                }
+            }`
+        })
+    });
+    // const data = await dataRaw.json();
+    // return data.data.createSemester;
+}
+
+async function createSubjectDB(subj) {
+    const dataRaw = await fetch('/db?createSubject', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `mutation {
+                createSubject(
+                    semId: "${subj.semId}",
+                    name: "${subj.name}",
+                    descrip: "${subj.descrip}",
+                    status: ${subj.status},
+                    difficulty: ${subj.difficulty},
+                    grade: ${subj.grade},
+                    like: ${subj.like}
+                ) {
+                    id
+                }
+            }`
+        })
+    });
+    // const data = await dataRaw.json();
+    // return data.data.createSubject;
+}
+
+
+/**
  * Obtiene los datos de la base de datos.
  * @returns {Object} - Objeto con los datos de la base de datos
  */
@@ -104,11 +173,6 @@ async function getSemesters() {
  * Obtiene un semestre por su id.
  */
 async function getSemesterById(id) {
-    // const data = await getData();
-    // // Forzar a que id sea una string
-    // id = String(id);
-    // return data.semesters.find(sem => sem.id === id);
-
     const dataRaw = await fetch('/db?getSemesterById', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -141,6 +205,43 @@ async function getSemesterById(id) {
     return data.data.getSemesterById;
 }
 
+/**
+ * Actualiza un semestre
+ */
+async function updateSemester(sem) {
+    // Cast to string
+    sem.id = String(sem.id);
+    // Cast to number
+    sem.year = Number(sem.year);
+
+    // const semUpdated = await getSemesterById(sem.id);
+    const dataRaw = await fetch('/db?updateSemester', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `mutation {
+                updateSemester(
+                    id: "${sem.id}",
+                    name: "${sem.name}",
+                    year: ${sem.year},
+                    start: "${sem.start}",
+                    end: "${sem.end}",
+                    descrip: "${sem.descrip}",
+                    color: "${sem.color}",
+                    kind: ${sem.type},
+                    tutorized: ${sem.tutorized}
+                ) {
+                    id
+                }
+            }`
+        })
+    });
+    const data = await dataRaw.json();
+
+    if (!data.data.updateSemester) {
+        throw new Error(`Semester ${sem.id} not found`);
+    }
+}
 
 /**
  * Borra un semestre o asignatura de la base de datos.
@@ -213,48 +314,48 @@ async function deleteSubjectDB(id) {
 // Cuando estas funciones accedan a una BD real, el resto del programa no
 // necesitará ningún cambio.
 
-/**
- * Crea un nuevo semestre o asignatura en la base de datos.
- * @param {Object} info - Objeto con la información del semestre o asignatura
- */
-async function createData(info) {
+// /**
+//  * Crea un nuevo semestre o asignatura en la base de datos.
+//  * @param {Object} info - Objeto con la información del semestre o asignatura
+//  */
+// async function createData(info) {
 
-    const data = await getData();
+//     const data = await getData();
 
-    // Create semester
-    if (info.sem) {
-        console.log('Creating semester', info.sem);
-        // Assign new id to semester, using reduce
-        // Aquí se imita la asignación de un id nuevo a un semestre, como hacen
-        // las bases de datos. Se usa reduce para obtener el id más alto de los
-        // semestres existentes y se le suma 1.
-        const id = data.semesters.reduce((max, sem) => {
-            return Number(sem.id) > max ? Number(sem.id) : max;
-        }, 0) + 1;
-        info.sem.id = String(id);  // Cast to string
+//     // Create semester
+//     if (info.sem) {
+//         console.log('Creating semester', info.sem);
+//         // Assign new id to semester, using reduce
+//         // Aquí se imita la asignación de un id nuevo a un semestre, como hacen
+//         // las bases de datos. Se usa reduce para obtener el id más alto de los
+//         // semestres existentes y se le suma 1.
+//         const id = data.semesters.reduce((max, sem) => {
+//             return Number(sem.id) > max ? Number(sem.id) : max;
+//         }, 0) + 1;
+//         info.sem.id = String(id);  // Cast to string
 
-        data.semesters.push(info.sem);
-    }
+//         data.semesters.push(info.sem);
+//     }
 
-    // Create subject
-    if (info.subj) {
-        console.log('Creating subject', info.subj);
+//     // Create subject
+//     if (info.subj) {
+//         console.log('Creating subject', info.subj);
 
-        const sem = await getSemesterById(info.subj.semId);
+//         const sem = await getSemesterById(info.subj.semId);
 
-        // Obtener el id nuevo de la asignatura, usando reduce para obtener el
-        // id más alto de todas las asignaturas de todos los semestres
-        const id = data.semesters
-            .map(sem => sem.subjects)
-            .flat()
-            .reduce((max, subj) => {
-                return Number(subj.id) > max ? Number(subj.id) : max;
-            }, 0) + 1;
-        info.subj.id = String(id);  // Cast to string
+//         // Obtener el id nuevo de la asignatura, usando reduce para obtener el
+//         // id más alto de todas las asignaturas de todos los semestres
+//         const id = data.semesters
+//             .map(sem => sem.subjects)
+//             .flat()
+//             .reduce((max, subj) => {
+//                 return Number(subj.id) > max ? Number(subj.id) : max;
+//             }, 0) + 1;
+//         info.subj.id = String(id);  // Cast to string
 
-        sem.subjects.push(info.subj);
-    }
-}
+//         sem.subjects.push(info.subj);
+//     }
+// }
 
 // FUNCIÓN FALSA COMENTADA - YA EXISTE LA FUNCIÓN REAL
 // /**
@@ -279,31 +380,31 @@ async function createData(info) {
 //     return data.semesters.find(sem => sem.id === id);
 // }
 
-/**
- * Actualiza un semestre
- */
-async function updateSemester(sem) {
-    // Cast to string
-    sem.id = String(sem.id);
-    // Cast to number
-    sem.year = Number(sem.year);
+// /**
+//  * Actualiza un semestre
+//  */
+// async function updateSemester(sem) {
+//     // Cast to string
+//     sem.id = String(sem.id);
+//     // Cast to number
+//     sem.year = Number(sem.year);
 
-    const semOld = await getSemesterById(sem.id);
+//     const semOld = await getSemesterById(sem.id);
 
-    if (semOld) {
-        semOld.name = sem.name;
-        semOld.year = sem.year;
-        semOld.start = sem.start;
-        semOld.end = sem.end;
-        semOld.descrip = sem.descrip;
-        semOld.color = sem.color;
-        semOld.type = sem.type;
-        semOld.tutorized = sem.tutorized;
+//     if (semOld) {
+//         semOld.name = sem.name;
+//         semOld.year = sem.year;
+//         semOld.start = sem.start;
+//         semOld.end = sem.end;
+//         semOld.descrip = sem.descrip;
+//         semOld.color = sem.color;
+//         semOld.type = sem.type;
+//         semOld.tutorized = sem.tutorized;
 
-    } else {
-        throw new Error(`Semester ${sem.id} not found`);
-    }
-}
+//     } else {
+//         throw new Error(`Semester ${sem.id} not found`);
+//     }
+// }
 
 /**
  * Obtiene una asignatura por su id.
@@ -559,7 +660,7 @@ async function handleSemForm(ev, form) {
         end: form.semEnd.value,
         descrip: form.semDescrip.value,
         color: form.semColor.value,
-        type: form.semType.value,
+        type: Number(form.semType.value),
         tutorized: form.semTutor.checked,
         subjects: [],
     };
@@ -601,8 +702,8 @@ async function handleSubjectForm(ev, form) {
         semId: String(form.subjSemId.value),
         name: form.subjectName.value,
         descrip: form.subjectDescrip.value,
-        difficulty: form.subjectDifficulty.value,
-        grade: form.subjectGrade.value,
+        difficulty: Number(form.subjectDifficulty.value),
+        grade: Number(form.subjectGrade.value),
         like: form.subjectLike.checked,
         status: Number(form.subjStatus.value),
     };
@@ -787,7 +888,7 @@ async function openSem(id) {
 }
 
 
-async function openSemForm(id=null) {
+async function openSemForm(id = null) {
     if (id) {
         // Si existe un id, estamos editando un semestre existente
         semModalTitle.innerHTML = 'Editar semestre';
