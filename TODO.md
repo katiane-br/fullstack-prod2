@@ -5,3 +5,8 @@
 * Control de errores en frontend:
     * Actualmente, es posible que un usuario borre un semestre (y todas sus asignaturas) mientras otro está dentro del semestre. Si no se capturan los errores, la actualización de asignaturas se hará sobre objetos que ya no existen.
 
+* Frontend, archivo app.js. Crear las funciones de BD real:
+    * getSubjectById
+    * updateSubjectStatus
+    * updateSubject
+    

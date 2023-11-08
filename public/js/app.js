@@ -851,8 +851,9 @@ function applyListeners() {
  * Muestra la lista de semestres y oculta la página de asignaturas.
  * También cambia el título y una palabra del eslogan.
  */
-function goSemsList() {
+async function goSemsList() {
     hideMe(semHeader, semesterPage);
+    await refreshSemesters();
     showMe(dashboardHeader, semestersList);
 }
 
