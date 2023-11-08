@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const subjectSchema = new mongoose.Schema({
+    semId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Semester",
+        required: true
+    },
     name: {
         type: String,
         required: true,
