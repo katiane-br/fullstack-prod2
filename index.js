@@ -6,6 +6,7 @@ import http from 'http';
 import cors from 'cors';
 import { allData } from './data/data.js';
 import 'dotenv/config';
+import { dbConnection } from './config/config.js';
 
 //schema
 const typeDefs = `#graphql
@@ -67,6 +68,8 @@ await server.start();
 
 // Routes
 app.use(express.static('public'));
+
+dbConnection();
 app.use('/db', cors(), express.json(), expressMiddleware(server));
 
 // Server startup
