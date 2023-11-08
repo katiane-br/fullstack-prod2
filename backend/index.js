@@ -5,6 +5,7 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import taskdata from './data/tasks_data.json' assert { type: "json" };
+import { allData } from './data/data.js';
 import 'dotenv/config';
 
 //schema

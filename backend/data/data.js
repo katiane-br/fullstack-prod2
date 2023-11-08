@@ -1,4 +1,4 @@
-{
+export const allData = {
     "semesters": [
         {
             "id": "1",
@@ -175,4 +175,4 @@
             ]
         }
     ]
-}
+};
