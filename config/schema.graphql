@@ -24,7 +24,6 @@ type Semester {
 type Query {
   semesters: [Semester]
   getSemesterById(id: ID!): Semester
-  getSubjects: [Subject]
   getSubjectById(id: ID!): Subject
 }
 
