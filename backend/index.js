@@ -1,9 +1,7 @@
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import taskdata from './data/tasks_data.json' assert { type: "json" };
-import pkg from 'dotenv';
-const {env} = pkg;
-
+import 'dotenv/config'
 
 //schema
 const typeDefs = `#graphql
@@ -31,7 +29,7 @@ const resolvers = {
   Query: {
     tasks: () =>{
         return taskdata;
-    } 
+    }
   },
 };
 
