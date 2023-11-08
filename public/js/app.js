@@ -43,7 +43,7 @@ function hideMe(...elems) { elems.forEach(e => e.classList.add('d-none')); }
  * @returns {Object} - Objeto con los datos de la base de datos
  */
 async function getData() {
-    const dataRaw = await fetch('/db', {
+    const dataRaw = await fetch('/db?allData', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -76,7 +76,7 @@ async function getData() {
 }
 
 async function getSemesters() {
-    const dataRaw = await fetch('/db', {
+    const dataRaw = await fetch('/db?semesters', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -108,7 +108,49 @@ async function getSemesters() {
     return data.data.semesters;
 }
 
+//  TODAVÍA NO FUNCIONARÁ, HASTA QUE NO SE CREEN LOS SEMESTRES NUEVOS DENTRO DE
+// LA BASE DE DATOS (ACTUALMENTE SE CREAN SOLO EN LA VARIABLE 'data' QUE
+// DESAPARECE AL FINAL DE LA FUNCIÓN DE CREACIÓN)
+// /**
+//  * Obtiene un semestre por su id.
+//  */
+// async function getSemesterById(id) {
+//     // const data = await getData();
+//     // // Forzar a que id sea una string
+//     // id = String(id);
+//     // return data.semesters.find(sem => sem.id === id);
 
+//     const dataRaw = await fetch('/db?getSemesterById', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//             query: `{
+//                 getSemesterById(id: "${id}") {
+//                     id
+//                     name
+//                     year
+//                     start
+//                     end
+//                     descrip
+//                     color
+//                     kind
+//                     tutorized
+//                     subjects {
+//                         id
+//                         name
+//                         descrip
+//                         status
+//                         difficulty
+//                         grade
+//                         like
+//                     }
+//                 }
+//             }`
+//         })
+//     });
+//     const data = await dataRaw.json();
+//     return data.data.getSemesterById;
+// }
 
 
 
