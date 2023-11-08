@@ -9,17 +9,17 @@ const typeDefs = `#graphql
 
   # This "Task" type defines the queryable fields for every book in our data source.
   type Task {
-    id:ID!,
-    name:String!,
-    description:String,
-    days:Int,
+    id:ID!
+    name:String!
+    description:String
+    days:Int
   }
 
   # The "Query" type is special: it lists all of the available queries that
   # clients can execute, along with the return type for each. In this
   # case, the "tasks" query returns an array of zero or more Tasks (defined above).
   type Query {
-    tasks: [Task]
+    getTasks: [Task]
   }
 `;
 
@@ -27,9 +27,7 @@ const typeDefs = `#graphql
 // This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-    tasks: () =>{
-        return taskdata;
-    }
+    getTasks: () => taskdata,
   },
 };
 
