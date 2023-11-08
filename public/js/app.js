@@ -11,8 +11,7 @@ const SUSPENDIDA = 3;
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 // Variables globales que serán necesarias en muchas funciones
-let data;
-
+// (No hace falta ninguna)
 
 
 
@@ -111,6 +110,9 @@ async function getSemesters() {
  * @param {Object} info - Objeto con la información del semestre o asignatura
  */
 async function createData(info) {
+
+    const data = await getData();
+
     // Create semester
     if (info.sem) {
         console.log('Creating semester', info.sem);
@@ -162,7 +164,8 @@ async function createData(info) {
  * Obtiene un semestre por su id.
  */
 async function getSemesterById(id) {
-    // Frozar a que id sea una string
+    const data = await getData();
+    // Forzar a que id sea una string
     id = String(id);
     return data.semesters.find(sem => sem.id === id);
 }
@@ -199,6 +202,7 @@ async function updateSemester(sem) {
  * Luego busca la asignatura por su id en ese array.
  */
 async function getSubjectById(id) {
+    const data = await getData();
     id = String(id);
     return data.semesters
         .map(sem => sem.subjects)
@@ -255,6 +259,9 @@ async function updateSubject(subj) {
  * Borra un semestre o asignatura de la base de datos.
  */
 async function deleteData(info) {
+
+    const data = await getData();
+
     if (info.semId) {
         // Delete semester by Id
         console.log('Deleting semester', info.semId);
@@ -846,7 +853,6 @@ const zones = [pendientesZone, empezadasColumn, aprobadasColumn,
 */
 async function init() {
     applyListeners();
-    data = await getData();
     await refreshSemesters();
 }
 ////////////////////////////////////////////////////////////////////////////////
