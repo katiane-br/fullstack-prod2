@@ -438,7 +438,7 @@ function createSemCard(sem) {
     if (descrip.length > 30) { descrip = descrip.slice(0, 27) + '...'; }
 
     return `<div id="semester${sem.id}" class="card mb-3 semester-card" data-id="${sem.id}">
-    <button class="btn-close btn-close2" onclick="deleteSem(${sem.id})"></button>
+    <button class="btn-close btn-close2" onclick="deleteSem('${sem.id}')"></button>
     <h5 class="card-header textshadow" style="background-color:${sem.color}">
     ${sem.name}
     </h5>
@@ -450,8 +450,8 @@ function createSemCard(sem) {
     </div>
     </div>
     <div class="card-footer d-flex justify-content-around" style="background-color:${sem.color}">
-    <button class="custom-btn" onclick="openSemForm(${sem.id})">Editar</button>
-    <button class="custom-btn-5" onclick="openSem(${sem.id})">Abrir</button>
+    <button class="custom-btn" onclick="openSemForm('${sem.id}')">Editar</button>
+    <button class="custom-btn-5" onclick="openSem('${sem.id}')">Abrir</button>
     </div>
 </div>`;
 }
@@ -466,10 +466,10 @@ function createSubjectCard(subj) {
 
     return `<div class="card parrafo" draggable="true" id="subject${subj.id}" data-id="${subj.id}">
     <div class="card-body">
-        <button class="btn-close" onclick="deleteSubject(${subj.id})"></button>
+        <button class="btn-close" onclick="deleteSubject('${subj.id}')"></button>
         <h5 class="card-title">${subj.name}</button></h5>
         <p class="card-text">${descrip}</p>
-        <button class="custom-btn-card-dg" onclick="openSubjectForm(null,${subj.id})">EDITAR</button>
+        <button class="custom-btn-card-dg" onclick="openSubjectForm(null,'${subj.id}')">EDITAR</button>
     </div>
 </div>`;
 }
