@@ -1,4 +1,5 @@
 import SemestersController from "../controllers/SemestersController.js";
+import SubjectsController from "../controllers/SubjectsController.js";
 
 // Resolvers define how to fetch the types defined in your schema.
 const resolvers = {
@@ -9,8 +10,9 @@ const resolvers = {
     getSemesterById: async (obj, { id }) => {
       return await SemestersController.getSemesterById(id);
     },
-    getSubjectById: (obj, { id }) => allData.subjects
-      .find(subject => subject.id === id),
+    getSubjectById: async (obj, { id }) => {
+      return await SubjectsController.getSubjectById(id);
+    },
   },
 
   Mutation:  {
@@ -27,15 +29,15 @@ const resolvers = {
     },
 
     createSubject: async (obj, subjectData) => {
-      return await SemestersController
+      return await SubjectsController
         .createSubject(subjectData);
     },
     updateSubject: async (obj, subjectData) => {
-      return await SemestersController
+      return await SubjectsController
         .updateSubject(subjectData.id, subjectData);
     },
     deleteSubject: async (obj, { id }) => {
-      return await SemestersController.deleteSubject(id);
+      return await SubjectsController.deleteSubject(id);
     },
   },
 };
