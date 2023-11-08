@@ -43,6 +43,7 @@ const httpServer = http.createServer(app);
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
+// Also, can have plugins
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -53,7 +54,7 @@ await server.start();
 
 // Routes
 app.use(express.static('public'));
-app.use('/graphql', cors(), express.json(), expressMiddleware(server));
+app.use('/db', cors(), express.json(), expressMiddleware(server));
 
 // Server startup
 const port = process.env.PORT || 4000;
