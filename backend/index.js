@@ -20,6 +20,7 @@ const typeDefs = `#graphql
   # case, the "tasks" query returns an array of zero or more Tasks (defined above).
   type Query {
     getTasks: [Task]
+    getTaskById(id: ID!): Task
   }
 `;
 
@@ -28,6 +29,7 @@ const typeDefs = `#graphql
 const resolvers = {
   Query: {
     getTasks: () => taskdata,
+    getTaskById: (obj, {id}) => taskdata.find(task => task.id === id),
   },
 };
 
