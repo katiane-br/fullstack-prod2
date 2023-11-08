@@ -1,5 +1,9 @@
 import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
+import { expressMiddleware } from '@apollo/server/express4';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import express from 'express';
+import http from 'http';
+import cors from 'cors';
 import taskdata from './data/tasks_data.json' assert { type: "json" };
 import 'dotenv/config';
 
@@ -34,20 +38,24 @@ const resolvers = {
 };
 
 
+const app = express();
+const httpServer = http.createServer(app);
+
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
-// Passing an ApolloServer instance to the `startStandaloneServer` function:
-//  1. creates an Express app
-//  2. installs your ApolloServer instance as middleware
-//  3. prepares your app to handle incoming requests
-const { url } = await startStandaloneServer(server, {
-  listen: { port: process.env.SERVER_PORT || 4000 },
-});
+await server.start();
 
-console.log(`🚀  Server port: ${process.env.SERVER_PORT}`);
-console.log(`🚀  Server ready at: ${url}`);
+// Routes
+app.use(express.static('public'));
+app.use('/graphql', cors(), express.json(), expressMiddleware(server));
+
+// Server startup
+const port = process.env.PORT || 4000;
+await new Promise(resolve => httpServer.listen({ port }, resolve));
+console.log(`🚀 Server ready at http://localhost:${port}`);
