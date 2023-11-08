@@ -9,6 +9,7 @@ const dbtest = async (req, res) => {
     try {
         const semesters = await Semester.find({});
         console.log(semesters);
+        return semesters;
         return res.send({msg: "All semesters", semesters});
 
     } catch(error) {
