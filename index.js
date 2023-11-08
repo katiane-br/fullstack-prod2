@@ -7,6 +7,7 @@ import cors from 'cors';
 import { allData } from './data/data.js';
 import 'dotenv/config';
 import { dbConnection } from './config/config.js';
+import { dbtest } from './test/dbtest.js';
 
 //schema
 const typeDefs = `#graphql
@@ -71,6 +72,7 @@ app.use(express.static('public'));
 
 dbConnection();
 app.use('/db', cors(), express.json(), expressMiddleware(server));
+app.get('/dbtest', dbtest);
 
 // Server startup
 const port = process.env.PORT || 4000;
