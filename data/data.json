@@ -1,7 +1,7 @@
 {
     "semesters": [
         {
-            "id": 1,
+            "id": "1",
             "name": "Fall 2013",
             "year": 2013,
             "start": "2013-08-26",
@@ -12,7 +12,7 @@
             "tutorized": true,
             "subjects": [
                 {
-                    "id": 1,
+                    "id": "1",
                     "name": "CS 101",
                     "descrip": "Intro to Computer Science",
                     "status": 0,
@@ -21,7 +21,7 @@
                     "like": 0
                 },
                 {
-                    "id": 2,
+                    "id": "2",
                     "name": "CS 102",
                     "descrip": "Intro to Computer Science",
                     "status": 0,
@@ -30,7 +30,7 @@
                     "like": 0
                 },
                 {
-                    "id": 3,
+                    "id": "3",
                     "name": "CS 103",
                     "descrip": "Intro to Computer Science",
                     "status": 2,
@@ -39,7 +39,7 @@
                     "like": 0
                 },
                 {
-                    "id": 4,
+                    "id": "4",
                     "name": "CS 104",
                     "descrip": "Intro to Computer Science",
                     "status": 1,
@@ -48,7 +48,7 @@
                     "like": 0
                 },
                 {
-                    "id": 5,
+                    "id": "5",
                     "name": "CS 105",
                     "descrip": "Intro to Computer Science",
                     "status": 1,
@@ -59,7 +59,7 @@
             ]
         },
         {
-            "id": 2,
+            "id": "2",
             "name": "Spring 2014",
             "year": 2014,
             "start": "2014-01-13",
@@ -70,7 +70,7 @@
             "tutorized": true,
             "subjects": [
                 {
-                    "id": 7,
+                    "id": "7",
                     "name": "CS 201",
                     "descrip": "Intro to Computer Science",
                     "status": 0,
@@ -79,7 +79,7 @@
                     "like": 0
                 },
                 {
-                    "id": 8,
+                    "id": "8",
                     "name": "CS 202",
                     "descrip": "Intro to Computer Science",
                     "status": 0,
@@ -88,7 +88,7 @@
                     "like": 0
                 },
                 {
-                    "id": 9,
+                    "id": "9",
                     "name": "CS 203",
                     "descrip": "Intro to Computer Science",
                     "status": 2,
@@ -97,7 +97,7 @@
                     "like": 0
                 },
                 {
-                    "id": 10,
+                    "id": "10",
                     "name": "CS 204",
                     "descrip": "Intro to Computer Science",
                     "status": 1,
@@ -106,7 +106,7 @@
                     "like": 0
                 },
                 {
-                    "id": 11,
+                    "id": "11",
                     "name": "CS 205",
                     "descrip": "Intro to Computer Science",
                     "status": 1,
@@ -117,7 +117,7 @@
             ]
         },
         {
-            "id": 3,
+            "id": "3",
             "name": "Fall 2014",
             "year": 2014,
             "start": "2014-08-25",
@@ -128,7 +128,7 @@
             "tutorized": true,
             "subjects": [
                 {
-                    "id": 13,
+                    "id": "13",
                     "name": "CS 301",
                     "descrip": "Intro to Computer Science",
                     "status": 0,
@@ -137,7 +137,7 @@
                     "like": 0
                 },
                 {
-                    "id": 14,
+                    "id": "14",
                     "name": "CS 302",
                     "descrip": "Intro to Computer Science",
                     "status": 0,
@@ -146,7 +146,7 @@
                     "like": 0
                 },
                 {
-                    "id": 15,
+                    "id": "15",
                     "name": "CS 303",
                     "descrip": "Intro to Computer Science",
                     "status": 2,
@@ -155,7 +155,7 @@
                     "like": 0
                 },
                 {
-                    "id": 16,
+                    "id": "16",
                     "name": "CS 304",
                     "descrip": "Intro to Computer Science",
                     "status": 1,
@@ -164,7 +164,7 @@
                     "like": 0
                 },
                 {
-                    "id": 17,
+                    "id": "17",
                     "name": "CS 305",
                     "descrip": "Intro to Computer Science",
                     "status": 1,
