@@ -10,11 +10,12 @@ const dbtest = async (req, res) => {
         const semesters = await Semester.find({});
         console.log(semesters);
         return semesters;
-        return res.send({msg: "All semesters", semesters});
+        // return res.send({msg: "All semesters", semesters});
 
     } catch(error) {
         console.log(error);
-        return res.status(500).send({msg: "Error getting semesters"});
+        // return res.status(500).send({msg: "Error getting semesters"});
+        return [];
     }
 
     // // Create new semester
@@ -25,7 +26,7 @@ const dbtest = async (req, res) => {
     //         start: new Date(),
     //         end: new Date(),
     //         descrip: "New semester description",
-    //         color: "blue",
+    //         color: "#FFCCCC",
     //         kind: 1,
     //         tutorized: false,
     //         subjects: []
