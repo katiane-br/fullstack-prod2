@@ -4,7 +4,6 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
-import taskdata from './data/tasks_data.json' assert { type: "json" };
 import { allData } from './data/data.js';
 import 'dotenv/config';
 
@@ -16,9 +15,9 @@ const typeDefs = `#graphql
     name: String!
     descrip: String
     status: Int!
-    difficulty: Int!
-    grade: Int!
-    like: Int!
+    difficulty: Int
+    grade: Int
+    like: Boolean
   }
 
   type Semester {
