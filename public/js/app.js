@@ -76,7 +76,36 @@ async function getData() {
 }
 
 async function getSemesters() {
-    return (await getData()).semesters;
+    const dataRaw = await fetch('/db', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `{
+                semesters {
+                    id
+                    name
+                    year
+                    start
+                    end
+                    descrip
+                    color
+                    kind
+                    tutorized
+                    subjects {
+                        id
+                        name
+                        descrip
+                        status
+                        difficulty
+                        grade
+                        like
+                    }
+                }
+            }`
+        })
+    });
+    const data = await dataRaw.json();
+    return data.data.semesters;
 }
 
 
