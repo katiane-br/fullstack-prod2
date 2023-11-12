@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+const { ApolloServer, gql } = require('apollo-server');
 
+//servidor 
+const server = new ApolloServer();
+// aranca el servdor
+server.listen().then ( ({url}) => {
+    console.log('Servidor listo en la ${url}')
+})
 // Carga las variables de entorno desde el archivo .env
 dotenv.config();
 
