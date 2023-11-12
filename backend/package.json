@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/katiane-br/fullstack-prod2#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0"
   }
 }

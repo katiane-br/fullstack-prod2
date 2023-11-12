@@ -9,3 +9,7 @@ Creando la parte visible de nuestra aplicación. FrontEnd.
 * Xavier Matoses Meseguer
 
 29 Octubre, 2023
+ npm install mongoose
+ npm install apollo-server graphql
+ npm install nodemon
+ npm run start
