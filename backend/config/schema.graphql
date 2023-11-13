@@ -1,43 +1,126 @@
-type Subject {
-  id: ID!
-  name: String!
-  descrip: String
-  status: Int!
-  difficulty: Int!
-  grade: Int!
-  like: Int!
-}
+import { ApolloServer, gql } from 'apollo-server';
 
-type Semester {
-  id: ID!
-  name: String!
-  year: Int!
-  start: String!
-  end: String!
-  descrip: String
-  color: String!
-  kind: Int!
-  tutorized: Boolean
-  subjects: [Subject]
-}
+// Schema
+const typeDefs = gql`
+  type Subject {
+    id: ID!
+    name: String!
+    descrip: String
+    status: Int!
+    difficulty: Int!
+    grade: Int!
+    like: Int!
+  }
 
-type Query {
-  semesters: [Semester]
-  getSemesterById(id: ID!): Semester
-  getSubjectById(id: ID!): Subject
-}
+  type Semester {
+    id: ID!
+    name: String!
+    year: Int!
+    start: String!
+    end: String!
+    descrip: String
+    color: String!
+    kind: Int!
+    tutorized: Boolean
+    subjects: [Subject]
+  }
 
-type Mutation {
+  type Query {
+    semesters: [Semester]
+    getSemesterById(id: ID!): Semester
+    getSubjectById(id: ID!): Subject
+  }
+
+  type Mutation {
     createSemester(
-        name: String!, year: Int!, start: String!, end: String!, descrip: String, color: String!, kind: Int!, tutorized: Boolean): Semester
+      name: String!
+      year: Int!
+      start: String!
+      end: String!
+      descrip: String
+      color: String!
+      kind: Int!
+      tutorized: Boolean
+    ): Semester
     updateSemester(
-        id: ID!, name: String, year: Int, start: String, end: String, descrip: String, color: String, kind: Int, tutorized: Boolean): Semester
-    deleteSemester(
-        id: ID!): Semester
+      id: ID!
+      name: String
+      year: Int
+      start: String
+      end: String
+      descrip: String
+      color: String
+      kind: Int
+      tutorized: Boolean
+    ): Semester
+    deleteSemester(id: ID!): Semester
     createSubject(
-        semId: ID!, name: String!, descrip: String, status: Int!, difficulty: Int!, grade: Int!, like: Int!): Subject
+      semId: ID!
+      name: String!
+      descrip: String
+      status: Int!
+      difficulty: Int!
+      grade: Int!
+      like: Int!
+    ): Subject
     updateSubject(
-        id: ID!, name: String, descrip: String, status: Int, difficulty: Int, grade: Int, like: Int): Subject
-    deleteSubject(
-        id: ID!): Subject
-}
+      id: ID!
+      name: String
+      descrip: String
+      status: Int
+      difficulty: Int
+      grade: Int
+      like: Int
+    ): Subject
+    deleteSubject(id: ID!): Subject
+  }
+`;
+
+// Resolvers
+const resolvers = {
+  Query: {
+    semesters: () => {
+      // Lógica para obtener todos los semestres
+    },
+    getSemesterById: (parent, args) => {
+      // Lógica para obtener un semestre por ID
+    },
+    getSubjectById: (parent, args) => {
+      // Lógica para obtener una asignatura por ID
+    },
+  },
+  Mutation: {
+    createSemester: (parent, args) => {
+      // Lógica para crear un nuevo semestre
+    },
+    updateSemester: (parent, args) => {
+      // Lógica para actualizar un semestre existente
+    },
+    deleteSemester: (parent, args) => {
+      // Lógica para eliminar un semestre
+    },
+    createSubject: (parent, args) => {
+      // Lógica para crear una nueva asignatura
+    },
+    updateSubject: (parent, args) => {
+      // Lógica para actualizar una asignatura existente
+    },
+    deleteSubject: (parent, args) => {
+      // Lógica para eliminar una asignatura
+    },
+  },
+};
+
+
+// Server
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+});
+
+// Inicia el servidor
+server.listen().then(({ url }) => {
+  console.log(`Servidor listo en ${url}`);
+});
+
+module.exports = resolvers; 
