@@ -14,3 +14,5 @@ Creando la parte visible de nuestra aplicación. FrontEnd.
  npm install apollo-server graphql
  npm install nodemon
  npm run start
+ npm install dotenv
+ node backend/config/db.js
