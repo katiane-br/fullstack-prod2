@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Semester from "./Semester.js";
 
 const subjectSchema = new mongoose.Schema({
     semId: {
