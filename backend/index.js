@@ -1,10 +1,13 @@
-import { ApolloServer } from "apollo-server-express";
-import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import { typeDefs } from './config/schema.js';
+import { resolvers } from './config/resolvers.js';
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
 import 'dotenv/config';
 import conectarDB from './config/config.js';
+import { expressMiddleware } from '@apollo/server/express4';
 
 // Constants
 const PORT = process.env.PORT || 3000;
@@ -15,15 +18,15 @@ const httpServer = http.createServer(app);
 
 // ApolloServer constructor
 const server = new ApolloServer({
-  typeDefs: import('./config/schema.graphql'),
-  resolvers: import('./config/resolvers.js'),
+  typeDefs,
+  resolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 });
 
-await server.start();
-server.applyMiddleware({ app });
+  await server.start(); //iniciar servidor Apollo
+  server.applyMiddleware({ app }); //aplicar middleware apollo a express
 
-// Routes
+// configurar Routes y middlewares de Express
 app.use(express.static('public'));
 conectarDB(); // Utiliza la función importada
 app.use('/db', cors(), express.json(), expressMiddleware(server));

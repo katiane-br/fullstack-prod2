@@ -5,31 +5,31 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-      "start": "nodemon index.js",
-      "dev": "nodemon index.js",
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "nodemon index.js",
+        "dev": "nodemon index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/katiane-br/fullstack-prod2.git"
+        "type": "git",
+        "url": "git+https://github.com/katiane-br/fullstack-prod2.git"
     },
     "author": "JackX",
     "license": "ISC",
     "bugs": {
-      "url": "https://github.com/katiane-br/fullstack-prod2/issues"
+        "url": "https://github.com/katiane-br/fullstack-prod2/issues"
     },
     "homepage": "https://github.com/katiane-br/fullstack-prod2#readme",
     "dependencies": {
-      "@apollo/server": "~4.9.5",
-      "cors": "^2.8.5",
-      "dotenv": "~16.3.1",
-      "express": "~4.18.2",
-      "graphql": "~16.8.1",
-      "graphql-http": "~1.22.0",
-      "mongoose": "~8.0.0"
+        "@apollo/server": "4.9.5",
+        "cors": "2.8.5",
+        "dotenv": "16.3.1",
+        "express": "4.18.2",
+        "graphql": "^16.8.1",
+        "graphql-http": "1.22.0",
+        "graphql-tools": "^9.0.0",
+        "mongoose": "8.0.0"
     },
     "devDependencies": {
-      "nodemon": "~3.0.1"
+        "nodemon": "3.0.1"
     }
-  }
-  
+}

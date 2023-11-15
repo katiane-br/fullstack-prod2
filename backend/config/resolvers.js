@@ -1,5 +1,5 @@
-import Subject from "./Subject";
-import Semestre from "./Semestre";
+import Subject from "../models/Subject.js";
+import Semestre from "../models/Semester.js";
 
 const resolvers = {
   Query: {
@@ -84,4 +84,4 @@ const resolvers = {
   },
 };
 
-export default resolvers;
+export { resolvers };

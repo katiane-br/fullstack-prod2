@@ -39,6 +39,6 @@ const semesterSchema = new mongoose.Schema({
 
 )
 
-const Semestre = mongoose.model("Semestre", semestreSchema);
+const Semestre = mongoose.model("Semestre", semesterSchema);
 
 export default Semestre;
