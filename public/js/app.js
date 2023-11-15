@@ -151,11 +151,12 @@ async function getData() {
  * @returns {Array} - Array con los semestres de la base de datos
  */
 async function getSemesters() {
-    const dataRaw = await fetch('/db?semesters', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            query: `{
+    try {
+        const dataRaw = await fetch('/db?semesters', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                query: `{
                 semesters {
                     id
                     name
@@ -163,10 +164,23 @@ async function getSemesters() {
                     color
                 }
             }`
-        })
-    });
-    const data = await dataRaw.json();
-    return data.data.semesters;
+            })
+        });
+        const data = await dataRaw.json();
+        return data.data.semesters;
+    } catch (err) {
+        // Show generic error message to user
+        const alertHTML = `<div class="alert alert-warning alert-dismissible mx-5">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <h4>Error de conexión</h4>
+        Ha habido algún error con la base de datos.
+        <br>
+        Por favor, inténtalo de nuevo más tarde.
+        </div>`;
+        document.body.innerHTML = alertHTML + document.body.innerHTML;
+        console.error(err);
+        return [];
+    }
 }
 
 /**
