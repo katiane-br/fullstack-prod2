@@ -14,3 +14,6 @@
 ## DONE
 * Al salir de un semestre y volver al inicio, no se recuperan de nuevo los datos, sino que se confía en los que ya hay. Debería refrescarse la información de semestres, porque no se sabe si algún otro usuario ha modificado los semestres.
     * Se llama a refreshSemesters
+
+* Hecha la 4ª query
+
