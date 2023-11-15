@@ -10,6 +10,9 @@ const resolvers = {
     getSemesterById: async (obj, { id }) => {
       return await SemestersController.getSemesterById(id);
     },
+    getSubjectsBySemesterId: async (obj, { semId }) => {
+      return await SubjectsController.getSubjectsBySemesterId(semId);
+    },
     getSubjectById: async (obj, { id }) => {
       return await SubjectsController.getSubjectById(id);
     },

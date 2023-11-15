@@ -5,6 +5,9 @@ const SubjectsController = {
     getSubjectById: async id => {
         return await Subject.findById(id);
     },
+    getSubjectsBySemesterId: async semId => {
+        return await Subject.find({ semId });
+    },
     createSubject: async newSubject => {
         const subject = await Subject.create(newSubject);
         // Add subject to its semester

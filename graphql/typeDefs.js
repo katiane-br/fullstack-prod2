@@ -28,6 +28,7 @@ const typeDefs = `#graphql
   type Query {
     semesters: [Semester]
     getSemesterById(id: ID!): Semester
+    getSubjectsBySemesterId(semId: ID!): [Subject]
     getSubjectById(id: ID!): Subject
   }
 
