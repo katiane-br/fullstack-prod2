@@ -10,11 +10,9 @@ import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 
 // Application imports
-// import { allData } from './data/data.js';
 import { dbConnection } from './config/config.js';
-// import { dbtest } from './test/dbtest.js';
-import resolvers from './graphql/resolvers.js';
 import typeDefs from './graphql/typeDefs.js';
+import resolvers from './graphql/resolvers.js';
 
 // Constants
 const PORT = process.env.PORT || 4000;
