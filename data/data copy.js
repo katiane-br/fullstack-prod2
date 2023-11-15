@@ -1,0 +1,178 @@
+export const allData = {
+    "semesters": [
+        {
+            "id": "1",
+            "name": "Fall 2013",
+            "year": 2013,
+            "start": "2013-08-26",
+            "end": "2013-12-13",
+            "descrip": "Fall 2013 semester",
+            "color": "#fab482",
+            "type": 1,
+            "tutorized": true,
+            "subjects": [
+                {
+                    "id": "1",
+                    "name": "CS 101",
+                    "descrip": "Intro to Computer Science",
+                    "status": 0,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "2",
+                    "name": "CS 102",
+                    "descrip": "Intro to Computer Science",
+                    "status": 0,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "3",
+                    "name": "CS 103",
+                    "descrip": "Intro to Computer Science",
+                    "status": 2,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "4",
+                    "name": "CS 104",
+                    "descrip": "Intro to Computer Science",
+                    "status": 1,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "5",
+                    "name": "CS 105",
+                    "descrip": "Intro to Computer Science",
+                    "status": 1,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Spring 2014",
+            "year": 2014,
+            "start": "2014-01-13",
+            "end": "2014-05-02",
+            "descrip": "Spring 2014 semester",
+            "color": "#d8dc6a",
+            "type": 1,
+            "tutorized": true,
+            "subjects": [
+                {
+                    "id": "7",
+                    "name": "CS 201",
+                    "descrip": "Intro to Computer Science",
+                    "status": 0,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "8",
+                    "name": "CS 202",
+                    "descrip": "Intro to Computer Science",
+                    "status": 0,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "9",
+                    "name": "CS 203",
+                    "descrip": "Intro to Computer Science",
+                    "status": 2,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "10",
+                    "name": "CS 204",
+                    "descrip": "Intro to Computer Science",
+                    "status": 1,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "11",
+                    "name": "CS 205",
+                    "descrip": "Intro to Computer Science",
+                    "status": 1,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Fall 2014",
+            "year": 2014,
+            "start": "2014-08-25",
+            "end": "2014-12-12",
+            "descrip": "Fall 2014 semester",
+            "color": "#adc3b0",
+            "type": 1,
+            "tutorized": true,
+            "subjects": [
+                {
+                    "id": "13",
+                    "name": "CS 301",
+                    "descrip": "Intro to Computer Science",
+                    "status": 0,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "14",
+                    "name": "CS 302",
+                    "descrip": "Intro to Computer Science",
+                    "status": 0,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "15",
+                    "name": "CS 303",
+                    "descrip": "Intro to Computer Science",
+                    "status": 2,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "16",
+                    "name": "CS 304",
+                    "descrip": "Intro to Computer Science",
+                    "status": 1,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                },
+                {
+                    "id": "17",
+                    "name": "CS 305",
+                    "descrip": "Intro to Computer Science",
+                    "status": 1,
+                    "difficulty": 1,
+                    "grade": 0,
+                    "like": 0
+                }
+            ]
+        }
+    ]
+};

@@ -3,6 +3,7 @@ import 'dotenv/config'
 import conectarDB from './config/db.js';
 import semestersRoutes from './routes/semestersRoutes.js'
 
+
 const app = express();
 conectarDB();
 
@@ -18,3 +19,4 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log('Servidor up en puerto', PORT)
 })
+

@@ -16,10 +16,7 @@ const conectarDB = async () => {
         // Construye la cadena de conexión de MongoDB
         const connectionString = `mongodb+srv://${dbUser}:${encodedPassword}@clusterp2jackx.pqmdrue.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
-        const connection = await mongoose.connect(connectionString, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+        const connection = await mongoose.connect(connectionString, {});
 
         // Probando la conexión
         const url = `${connection.connection.host}:${connection.connection.port}`;
