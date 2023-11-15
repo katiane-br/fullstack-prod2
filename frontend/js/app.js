@@ -90,17 +90,75 @@ async function createData(info) {
  */
 async function getData() {
     // Fake data from data/data.json
-    const dataRaw = await fetch('./data/data.json');
-    const data = await dataRaw.json();
-    return data;
+    // const dataRaw = await fetch('./data/data.json');
+    const dataRaw = await fetch('http://localhost:8000', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `{
+                semesters {
+                    id
+                    name
+                    year
+                    start
+                    end
+                    descrip
+                    color
+                    kind
+                    tutorized
+                    subjects {
+                        id
+                        name
+                        descrip
+                        status
+                        difficulty
+                        grade
+                        like
+                    }
+                }
+            }`
+        })
+    });
+    const dataJson = await dataRaw.json();
+    return dataJson.data;
 }
 
 /**
  * Obtiene un semestre por su id.
  */
 async function getSemesterById(id) {
-    id = Number(id);
-    return data.semesters.find(sem => sem.id === id);
+    const dataRaw = await fetch('http://localhost:8000', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: `{
+                getSemesterById(id: "${id}") {
+                    id
+                    name
+                    year
+                    start
+                    end
+                    descrip
+                    color
+                    kind
+                    tutorized
+                    subjects {
+                        id
+                        name
+                        descrip
+                        status
+                        difficulty
+                        grade
+                        like
+                    }
+                }
+            }`
+        })
+    });
+    const dataJson = await dataRaw.json();
+    return dataJson.data.getSemesterById;
+
+    //return data.semesters.find(sem => sem.id === id);
 }
 
 /**
@@ -134,7 +192,13 @@ async function updateSemester(sem) {
  * Luego busca la asignatura por su id en ese array.
  */
 async function getSubjectById(id) {
-    id = Number(id);
+    const data = await getData();
+    console.log(id);
+    id = String(id);
+    console.log("aaa");
+    console.log(data);
+    console.log(id);
+    console.log("bbb");
     return data.semesters
         .map(sem => sem.subjects)
         .flat()
@@ -304,8 +368,8 @@ function createSemCard(sem) {
     </div>
     </div>
     <div class="card-footer d-flex justify-content-around" style="background-color:${sem.color}">
-    <button class="custom-btn" onclick="openSemForm(${sem.id})">Editar</button>
-    <button class="custom-btn-5" onclick="openSem(${sem.id})">Abrir</button>
+    <button class="custom-btn" onclick="openSemForm('${sem.id}')">Editar</button>
+    <button class="custom-btn-5" onclick="openSem('${sem.id}')">Abrir</button>
     </div>
 </div>`;
 }
@@ -579,10 +643,10 @@ function refreshSemesters(semesters) {
 /**
  * Muestra la página de asignaturas y oculta la lista de semestres.
  * También cambia el título y una palabra del eslogan.
- * @param {Number} id - Id del semestre que se quiere abrir
+ * @param {String} id - Id del semestre que se quiere abrir
  */
 async function openSem(id) {
-
+    id = String(id);
     console.log('Opening sem', id);
 
     hideMe(dashboardHeader, semestersList);
