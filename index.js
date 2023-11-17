@@ -7,7 +7,9 @@ import 'dotenv/config';
 // Apollo imports
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
-import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import {
+  ApolloServerPluginDrainHttpServer
+} from '@apollo/server/plugin/drainHttpServer';
 
 // Application imports
 import { dbConnection } from './config/config.js';
@@ -30,10 +32,9 @@ const server = new ApolloServer({
 await server.start();
 
 // Routes
-app.use(express.static('public'));
+app.use(express.static('public'));  // Serves the static files
 dbConnection();
 app.use('/db', cors(), express.json(), expressMiddleware(server));
-// app.get('/dbtest', dbtest);
 
 // Server startup
 await new Promise(resolve => httpServer.listen({ port: PORT }, resolve));
