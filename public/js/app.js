@@ -38,7 +38,7 @@ function hideMe(...elems) { elems.forEach(e => e.classList.add('d-none')); }
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-// DATA
+// DATA FAKE DATABASE
 // Funciones que simulan acceder a una base de datos para leer,escribir, editar
 // y borrar datos (CRUD).
 // Cuando estas funciones accedan a una BD real, el resto del programa no
@@ -84,48 +84,12 @@ async function createData(info) {
     }
 }
 
-/**
- * Obtiene los datos de la base de datos.
- * @returns {Object} - Objeto con los datos de la base de datos
- */
-async function getData() {
-    const dataRaw = await fetch('/db?allData', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            query: `{
-                semesters {
-                    id
-                    name
-                    year
-                    start
-                    end
-                    descrip
-                    color
-                    kind
-                    tutorized
-                    subjects {
-                        id
-                        name
-                        descrip
-                        status
-                        difficulty
-                        grade
-                        like
-                    }
-                }
-            }`
-        })
-    });
-    const data = await dataRaw.json();
-    return data.data;
-}
 
 /**
  * Obtiene un semestre por su id.
  */
 async function getSemesterById(id) {
-    id = Number(id);
+    id = String(id);
     return data.semesters.find(sem => sem.id === id);
 }
 

@@ -1,6 +1,8 @@
 //schema
 const typeDefs = `#graphql
 
+  scalar DateTime
+
   type Subject {
     id: ID!
     semId: ID!
@@ -16,8 +18,8 @@ const typeDefs = `#graphql
     id: ID!
     name: String!
     year: Int!
-    start: String!
-    end: String!
+    start: DateTime!
+    end: DateTime!
     descrip: String
     color: String!
     kind: Int!
