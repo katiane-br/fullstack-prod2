@@ -17,32 +17,6 @@ const resolvers = {
       return await SubjectsController.getSubjectById(id);
     },
   },
-
-  Mutation:  {
-    createSemester: async (obj, semData) => {
-      semData.subjects = [];
-      return await SemestersController.createSemester(semData);
-    },
-    updateSemester: async (obj, semData) => {
-      return await SemestersController
-        .updateSemester(semData.id, semData);
-    },
-    deleteSemester: async (obj, { id }) => {
-      return await SemestersController.deleteSemester(id);
-    },
-
-    createSubject: async (obj, subjectData) => {
-      return await SubjectsController
-        .createSubject(subjectData);
-    },
-    updateSubject: async (obj, subjectData) => {
-      return await SubjectsController
-        .updateSubject(subjectData.id, subjectData);
-    },
-    deleteSubject: async (obj, { id }) => {
-      return await SubjectsController.deleteSubject(id);
-    },
-  },
 };
 
 export default resolvers;

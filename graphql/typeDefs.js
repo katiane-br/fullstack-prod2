@@ -31,22 +31,6 @@ const typeDefs = `#graphql
     getSubjectsBySemesterId(semId: ID!): [Subject]
     getSubjectById(id: ID!): Subject
   }
-
-  type Mutation {
-    createSemester(
-        name: String!, year: Int!, start: String!, end: String!, descrip: String, color: String!, kind: Int!, tutorized: Boolean): Semester
-    updateSemester(
-        id: ID!, name: String, year: Int, start: String, end: String, descrip: String, color: String, kind: Int, tutorized: Boolean): Semester
-    deleteSemester(
-        id: ID!): Semester
-
-    createSubject(
-        semId: ID!, name: String!, descrip: String, status: Int!, difficulty: Int, grade: Int, like: Boolean): Subject
-    updateSubject(
-        id: ID!, name: String, descrip: String, status: Int, difficulty: Int, grade: Int, like: Boolean): Subject
-    deleteSubject(
-        id: ID!): Subject
-  }
 `;
 
 export default typeDefs;
