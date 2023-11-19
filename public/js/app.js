@@ -172,14 +172,6 @@ async function createData(info) {
 }
 
 
-// /**
-//  * Obtiene un semestre por su id.
-//  */
-// async function getSemesterById(id) {
-//     id = String(id);
-//     return data.semesters.find(sem => sem.id === id);
-// }
-
 /**
  * Actualiza un semestre
  */
@@ -205,19 +197,6 @@ async function updateSemester(sem) {
         throw new Error(`Semester ${sem.id} not found`);
     }
 }
-
-// /**
-//  * Obtiene una asignatura por su id.
-//  * Recorre los semestres, obtiene sus asignaturas y las junta en un array.
-//  * Luego busca la asignatura por su id en ese array.
-//  */
-// async function getSubjectById(id) {
-//     id = String(id);
-//     return data.semesters
-//         .map(sem => sem.subjects)
-//         .flat()
-//         .find(subj => subj.id === id);
-// }
 
 /**
  * Actualiza el estado de una asignatura.
