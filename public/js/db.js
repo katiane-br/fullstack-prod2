@@ -51,18 +51,18 @@ async function getSemestersDB() {
 async function getSemesterByIdDB(id) {
     const body = {
         query: `{
-                getSemesterById(id: "${id}") {
-                    id
-                    name
-                    year
-                    start
-                    end
-                    descrip
-                    color
-                    kind
-                    tutorized
-                }
-            }`
+            getSemesterById(id: "${id}") {
+                id
+                name
+                year
+                start
+                end
+                descrip
+                color
+                kind
+                tutorized
+            }
+        }`
     };
     const data = await connectDB(body);
     if (data) { return data.getSemesterById; }
@@ -72,14 +72,14 @@ async function getSemesterByIdDB(id) {
 async function getSubjectsBySemesterIdDB(semId) {
     const body = {
         query: `{
-                getSubjectsBySemesterId(semId: "${semId}") {
-                    id
-                    semId
-                    name
-                    descrip
-                    status
-                }
-            }`
+            getSubjectsBySemesterId(semId: "${semId}") {
+                id
+                semId
+                name
+                descrip
+                status
+            }
+        }`
     };
     const data = await connectDB(body);
     if (data) {
@@ -91,17 +91,17 @@ async function getSubjectsBySemesterIdDB(semId) {
 async function getSubjectByIdDB(id) {
     const body = {
         query: `{
-                getSubjectById(id: "${id}") {
-                    id
-                    semId
-                    name
-                    descrip
-                    status
-                    difficulty
-                    grade
-                    like
-                }
-            }`
+            getSubjectById(id: "${id}") {
+                id
+                semId
+                name
+                descrip
+                status
+                difficulty
+                grade
+                like
+            }
+        }`
     };
     const data = await connectDB(body);
     if (data) { return data.getSubjectById; }
