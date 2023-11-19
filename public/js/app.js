@@ -90,19 +90,31 @@ async function getSubjectsBySemesterId_DBorFake(semId) {
     // Si todavía no se han cargado las asignatura, las sacamos de la BD
     if (!semester.subjects) {
         semester.subjects = await getSubjectsBySemesterIdDB(semId);
+        const index = data.semesters.findIndex(sem => sem.id === semId);
+        data.semesters[index] = semester;
     }
 
     return semester.subjects;
 }
 
 async function getSubjectById_DBorFake(id) {
-    const subject = data.semesters
+    let subject = data.semesters
         .map(sem => sem.subjects)
         .flat()
+        .filter(s => s)  // Filtrar las 'undefined'
         .find(subj => subj.id === id);
 
-    if (!subject.difficulty === undefined) {
+    if (subject.difficulty === undefined) {
         subject = await getSubjectByIdDB(id);
+        const semIndex = data.semesters
+            .findIndex(sem => sem.id === subject.semId);
+        const index = data.semesters
+            .map(sem => sem.subjects)
+            .flat()
+            .filter(s => s)  // Filtrar las 'undefined'
+            .findIndex(subj => subj.id === id);
+
+        data.semesters[semIndex].subjects[index] = subject;
     }
 
     return subject;
@@ -133,7 +145,7 @@ async function createData(info) {
         const id = data.semesters.reduce((max, sem) => {
             return sem.id > max ? sem.id : max;
         }, 0) + 1;
-        info.sem.id = id;
+        info.sem.id = String(id);
 
         data.semesters.push(info.sem);
     }
@@ -149,10 +161,11 @@ async function createData(info) {
         const id = data.semesters
             .map(sem => sem.subjects)
             .flat()
+            .filter(s => s)  // Filtrar las 'undefined'
             .reduce((max, subj) => {
                 return subj.id > max ? subj.id : max;
             }, 0) + 1;
-        info.subj.id = id;
+        info.subj.id = String(id);
 
         sem.subjects.push(info.subj);
     }
@@ -234,6 +247,7 @@ async function updateSubject(subj) {
     subj.id = String(subj.id);
     subj.status = Number(subj.status);
 
+    console.log('¿aquí?')
     const subjOld = await getSubjectById_DBorFake(subj.id);
 
     if (subjOld) {
@@ -263,7 +277,11 @@ async function deleteData(info) {
     if (info.subjId) {
         // Delete subject by Id
         console.log('Deleting subject', info.subjId);
-        data.semesters.forEach(sem =>
+        data.semesters
+            // Filtrar solo los semestres que tienen asignaturas  (para evitar
+            // errores)
+            .filter(sem => sem.subjects)
+            .forEach(sem =>
             sem.subjects = sem.subjects.filter(
                 subj => subj.id != info.subjId)
         );
@@ -701,7 +719,10 @@ async function openSemForm(id = null) {
  * cards de las asignaturas), y las vuelve a crear todas de nuevo, cada una en
  * su lista correspondiente.
  */
-function refreshSubjects(sem) {
+async function refreshSubjects(sem) {
+
+    const subjects = await getSubjectsBySemesterId_DBorFake(sem.id);
+
     // Clear lists
     pendientesList.innerHTML = '';
     empezadasList.innerHTML = '';
@@ -710,7 +731,7 @@ function refreshSubjects(sem) {
 
     if (sem) {
         // Fill in semester subjects by status
-        sem.subjects.forEach(subj => {
+        subjects.forEach(subj => {
             const subjCard = createSubjectCard(subj);
             switch (subj.status) {
                 case PENDIENTE:

@@ -18,6 +18,7 @@ async function connectDB(body) {
     });
     const responseJson = await responseRaw.json();
     console.log(responseJson.data);
+    // flashMessage("Obteniendo datos de la base de datos...");
     return responseJson.data;
 }
 
@@ -42,7 +43,7 @@ async function getSemestersDB() {
 async function getSemesterByIdDB(id) {
     const body = {
         query: `{
-                getSemesterById(id: ${id}) {
+                getSemesterById(id: "${id}") {
                     id
                     name
                     year
@@ -62,7 +63,7 @@ async function getSemesterByIdDB(id) {
 async function getSubjectsBySemesterIdDB(semId) {
     const body = {
         query: `{
-                getSubjectsBySemesterId(id: ${semId}) {
+                getSubjectsBySemesterId(semId: "${semId}") {
                     id
                     semId
                     name
@@ -78,7 +79,7 @@ async function getSubjectsBySemesterIdDB(semId) {
 async function getSubjectByIdDB(id) {
     const body = {
         query: `{
-                getSubjectById(id: ${id}) {
+                getSubjectById(id: "${id}") {
                     id
                     semId
                     name
