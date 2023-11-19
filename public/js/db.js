@@ -11,14 +11,22 @@
  * @returns {Object} - Objeto con los datos de la base de datos
  */
 async function connectDB(body) {
-    const responseRaw = await fetch('/db', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-    });
-    const responseJson = await responseRaw.json();
-    console.log("From DB", responseJson.data);
-    return responseJson.data;
+    try {
+        const responseRaw = await fetch('/db', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        const responseJson = await responseRaw.json();
+        console.log("From DB", responseJson.data);
+        messageFlash("Conectado con la base de datos", "success");
+        return responseJson.data;
+
+    } catch (error) {
+        console.error(error);
+        messageFlash("Error de conexión con la base de datos", "danger")
+        return null;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -35,7 +43,8 @@ async function getSemestersDB() {
         }`
     };
     const data = await connectDB(body)
-    return data.semesters;
+    if (data) { return data.semesters; }
+    return [];
 }
 
 
@@ -56,7 +65,8 @@ async function getSemesterByIdDB(id) {
             }`
     };
     const data = await connectDB(body);
-    return data.getSemesterById;
+    if (data) { return data.getSemesterById; }
+    return {};
 }
 
 async function getSubjectsBySemesterIdDB(semId) {
@@ -71,8 +81,11 @@ async function getSubjectsBySemesterIdDB(semId) {
                 }
             }`
     };
-    const data =  await connectDB(body);
-    return data.getSubjectsBySemesterId;
+    const data = await connectDB(body);
+    if (data) {
+        return data.getSubjectsBySemesterId;
+    }
+    return [];
 }
 
 async function getSubjectByIdDB(id) {
@@ -91,7 +104,8 @@ async function getSubjectByIdDB(id) {
             }`
     };
     const data = await connectDB(body);
-    return data.getSubjectById;
+    if (data) { return data.getSubjectById; }
+    return {};
 }
 
 

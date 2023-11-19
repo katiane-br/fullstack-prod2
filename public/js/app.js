@@ -30,7 +30,15 @@ function showMe(...elems) { elems.forEach(e => e.classList.remove('d-none')); }
  * Para ello, añade la clase 'd-none' en cada elemento.
  */
 function hideMe(...elems) { elems.forEach(e => e.classList.add('d-none')); }
-
+function messageFlash(msg, kind = "success") {
+    flashMsg.innerHTML = msg;
+    flash.classList.remove('d-none');
+    flash.classList.add(`alert-${kind}`);
+    setTimeout(() => {
+        flash.classList.add('d-none');
+        flash.classList.remove(`alert-${kind}`);
+    }, 3000);
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -261,9 +269,9 @@ async function deleteData(info) {
             // errores)
             .filter(sem => sem.subjects)
             .forEach(sem =>
-            sem.subjects = sem.subjects.filter(
-                subj => subj.id != info.subjId)
-        );
+                sem.subjects = sem.subjects.filter(
+                    subj => subj.id != info.subjId)
+            );
     }
 }
 
@@ -801,6 +809,9 @@ const aprobadasColumn = document.getElementById('aprobadas-column');
 const aprobadasList = document.getElementById('aprobadasList');
 const suspendidasColumn = document.getElementById('suspendidas-column');
 const suspendidasList = document.getElementById('suspendidasList');
+const flash = document.getElementById('flash');
+const flashMsg = document.getElementById('flashMsg');
+
 // Fields in forms
 const semFormFields = {
     id: document.getElementById('semId'),
