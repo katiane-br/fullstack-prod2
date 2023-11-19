@@ -4,21 +4,9 @@
 * Control de errores en frontend:
     * Actualmente, es posible que un usuario borre un semestre (y todas sus asignaturas) mientras otro está dentro del semestre. Si no se capturan los errores, la actualización de asignaturas se hará sobre objetos que ya no existen.
 
-* Frontend, archivo app.js. Crear las funciones de BD real:
-    * getSubjectById
-    * updateSubjectStatus
-    * updateSubject
 
 
 ## TODO ########################################################################
-* Usar las 4 queries desde el front:
-    * Lista de semestres. con las mínimas infos necesarias para las cards
-    * Pedir un solo semestre: con las infos para el formulario
-    * Pedir las asignaturas de un semestre: solo con sus infos necesarias
-    * Perdir las infos de una asignatura, para rellenar su formulario
-
-* Error: los datos de tipo fecha de la BD llegan como integers
-    hay que adaptar antes de injectarlas en los campos de inicio y fin del formulario de semestres.
 
 
 
@@ -34,3 +22,18 @@
 
 * Hecha la 4ª query
 
+* Frontend, archivo app.js. Crear las funciones de BD real:
+    * getSubjectById
+    * updateSubjectStatus
+    * updateSubject
+
+* Usar las 4 queries desde el front:
+    * Lista de semestres. con las mínimas infos necesarias para las cards
+    * Pedir un solo semestre: con las infos para el formulario
+    * Pedir las asignaturas de un semestre: solo con sus infos necesarias
+    * Perdir las infos de una asignatura, para rellenar su formulario
+* Error: los datos de tipo fecha de la BD llegan como integers
+    hay que adaptar antes de injectarlas en los campos de inicio y fin del formulario de semestres.
+    * Usando la librería graphql-scalars, se puede usar DateTime como un tipo de dato de graphql.
+    * En el frontend, recortar los 10 primeros caracteres
+* El tipo de semestre usa la palabra `kind` en vez de `type`, para evitar confusiones. Había un error en eso.

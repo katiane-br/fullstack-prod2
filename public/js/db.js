@@ -17,8 +17,7 @@ async function connectDB(body) {
         body: JSON.stringify(body)
     });
     const responseJson = await responseRaw.json();
-    console.log(responseJson.data);
-    // flashMessage("Obteniendo datos de la base de datos...");
+    console.log("From DB", responseJson.data);
     return responseJson.data;
 }
 

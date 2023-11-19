@@ -198,7 +198,7 @@ async function updateSemester(sem) {
         semOld.end = sem.end;
         semOld.descrip = sem.descrip;
         semOld.color = sem.color;
-        semOld.type = sem.type;
+        semOld.kind = sem.kind;
         semOld.tutorized = sem.tutorized;
 
     } else {
@@ -450,7 +450,7 @@ async function handleSemForm(ev, form) {
         end: form.semEnd.value,
         descrip: form.semDescrip.value,
         color: form.semColor.value,
-        type: Number(form.semType.value),
+        kind: Number(form.semKind.value),
         tutorized: form.semTutor.checked,
         subjects: [],
     };
@@ -689,11 +689,11 @@ async function openSemForm(id = null) {
         semFormFields.id.value = id;
         semFormFields.name.value = sem.name;
         semFormFields.year.value = sem.year;
-        semFormFields.start.value = sem.start;
-        semFormFields.end.value = sem.end;
+        semFormFields.start.value = sem.start.slice(0, 10);
+        semFormFields.end.value = sem.end.slice(0, 10);
         semFormFields.descrip.value = sem.descrip;
         semFormFields.color.value = sem.color;
-        semFormFields.type.value = sem.type;
+        semFormFields.kind.value = sem.kind;
         semFormFields.tutorized.checked = sem.tutorized;
 
     } else {
@@ -707,7 +707,7 @@ async function openSemForm(id = null) {
         semFormFields.end.value = '';
         semFormFields.descrip.value = '';
         semFormFields.color.value = '#c398b7';
-        semFormFields.type.value = '1';
+        semFormFields.kind.value = '1';
         semFormFields.tutorized.checked = true;
     }
     semesterModal.show();
@@ -831,7 +831,7 @@ const semFormFields = {
     end: document.getElementById('semEnd'),
     descrip: document.getElementById('semDescrip'),
     color: document.getElementById('semColor'),
-    type: document.getElementById('semType'),
+    kind: document.getElementById('semKind'),
     tutorized: document.getElementById('semTutor'),
 };
 const subjFormFields = {
