@@ -3,6 +3,11 @@
 ## BACKLOG #####################################################################
 * Control de errores en frontend:
     * Actualmente, es posible que un usuario borre un semestre (y todas sus asignaturas) mientras otro está dentro del semestre. Si no se capturan los errores, la actualización de asignaturas se hará sobre objetos que ya no existen.
+* Control de errores en fetch
+    * Poner un try-catch en el fetch y un mensaje de aviso.
+    * El catch devolverà null,
+    * Comprobar en cada llamada al fetch si el resultado es null, y si lo es, devolver un objecto o array vacío (según lo que se espere).
+
 
 
 
@@ -27,6 +32,7 @@
     * updateSubjectStatus
     * updateSubject
 
+### 2023-11-19
 * Usar las 4 queries desde el front:
     * Lista de semestres. con las mínimas infos necesarias para las cards
     * Pedir un solo semestre: con las infos para el formulario
