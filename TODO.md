@@ -20,6 +20,25 @@
 
 
 
+## DOCUMENTS ###################################################################
+// // EXAMPLE FROM https://stackoverflow.com/a/45315867
+
+// // Controller.js
+// exports.user_read = async id => {
+//     return Contact.findById(id, (err, user) => {
+//         err ? reject(err) : resolve(user);
+//     });
+//   }
+
+//   // Resolver.js
+//   var contact = require('Controller');
+//   ...
+//   // root object passed as rootValue to graphqlHTTP
+//   getUser: ({ id }) => {
+//     return await contact.user_read(id)
+//   }
+//   ...
+
 
 ## DONE ########################################################################
 * Al salir de un semestre y volver al inicio, no se recuperan de nuevo los datos, sino que se confía en los que ya hay. Debería refrescarse la información de semestres, porque no se sabe si algún otro usuario ha modificado los semestres.

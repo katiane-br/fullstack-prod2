@@ -585,24 +585,6 @@ function applyListeners() {
     // Drag&drop listeners
     // En vez de hacerlo una a una, podemos iterar por el array de zonas con
     // forEach y aplicar los listeners a cada una de ellas.
-
-    // pendientesZone.addEventListener('dragover', dragover);
-    // pendientesZone.addEventListener('dragenter', dragenter);
-    // pendientesZone.addEventListener('dragleave', dragleave);
-    // pendientesZone.addEventListener('drop', dragdrop);
-    // empezadasColumn.addEventListener('dragover', dragover);
-    // empezadasColumn.addEventListener('dragenter', dragenter);
-    // empezadasColumn.addEventListener('dragleave', dragleave);
-    // empezadasColumn.addEventListener('drop', dragdrop);
-    // aprobadasColumn.addEventListener('dragover', dragover);
-    // aprobadasColumn.addEventListener('dragenter', dragenter);
-    // aprobadasColumn.addEventListener('dragleave', dragleave);
-    // aprobadasColumn.addEventListener('drop', dragdrop);
-    // suspendidasColumn.addEventListener('dragover', dragover);
-    // suspendidasColumn.addEventListener('dragenter', dragenter);
-    // suspendidasColumn.addEventListener('dragleave', dragleave);
-    // suspendidasColumn.addEventListener('drop', dragdrop);
-
     zones.forEach(zone => {
         zone.addEventListener('dragover', dragover);
         zone.addEventListener('dragenter', dragenter);
@@ -841,10 +823,7 @@ const zones = [pendientesZone, empezadasColumn, aprobadasColumn,
 /**
  * Inicializa la página.
  * - Aplica los listeners de las zonas Drag&Drop
- * - Obtiene los datos de la base de datos y los guarda en el objeto global
- * `data`.
- * - Actualiza la lista de semestres, a partir de los datos que acaba de
- * obtener.
+ * - Actualiza la lista de semestres.
 */
 async function init() {
     applyListeners();
