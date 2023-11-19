@@ -10,8 +10,8 @@ const SUSPENDIDA = 3;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
-// Variables globales que serán necesarias en muchas funciones
-let data;
+// Variables globales que serán necesarias en la app
+const data = {};
 
 
 
@@ -31,6 +31,24 @@ function showMe(...elems) { elems.forEach(e => e.classList.remove('d-none')); }
  */
 function hideMe(...elems) { elems.forEach(e => e.classList.add('d-none')); }
 
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// DATA SELECTOR
+// Funciones que obtienen los datos, o bien de la BD, o bien de la constante
+// `data`, que es donde se guardan los datos que se obtienen de la BD.
+// De esta manera, la BD solo se consula una vez para cada dato
+
+async function getSemestersDBorFake() {
+    if (!data.semesters) {
+        // Si todavía no existen los semestres en la constante `data`, se
+        // obtienen de la BD.
+        data.semesters = await getSemestersDB();
+    }
+    return data.semesters;
+}
 
 
 
@@ -153,7 +171,7 @@ async function updateSubjectStatus(id, status) {
 }
 
 /**
- * Actualiza una asignatura en la base de datos.
+ * Actualiza una asignatura en la (falsa) base de datos.
  */
 async function updateSubject(subj) {
     // Cast to correct types
@@ -249,7 +267,7 @@ async function deleteConfirmed() {
 
     if (what === "semester") {
         await deleteData({ semId: id });
-        refreshSemesters(data.semesters);
+        refreshSemesters();
 
     } else if (what === "subject") {
         await deleteData({ subjId: id });
@@ -372,7 +390,7 @@ async function handleSemForm(ev, form) {
         await createData({ sem });
     }
 
-    refreshSemesters(data.semesters);
+    refreshSemesters();
     return false;
 }
 
@@ -560,7 +578,10 @@ function goSemsList() {
  * Esto se hace para que se actualice la lista de semestres cuando se crea uno
  * nuevo, o bien se actualiza o se borra.
  */
-function refreshSemesters(semesters) {
+async function refreshSemesters() {
+
+    semesters = await getSemestersDBorFake();
+
     semestersList.innerHTML = '';
     semesters.forEach(sem => {
         semestersList.innerHTML += createSemCard(sem);
@@ -760,9 +781,8 @@ const zones = [pendientesZone, empezadasColumn, aprobadasColumn,
 */
 async function init() {
     applyListeners();
-    data = await getData();
     console.log(data.semesters)
-    refreshSemesters(data.semesters);
+    refreshSemesters();
 }
 ////////////////////////////////////////////////////////////////////////////////
 // Todo el código anterior no hace nigún cambio en el DOM. Solo define variables
