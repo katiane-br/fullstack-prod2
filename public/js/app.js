@@ -41,7 +41,12 @@ function hideMe(...elems) { elems.forEach(e => e.classList.add('d-none')); }
 // `data`, que es donde se guardan los datos que se obtienen de la BD.
 // De esta manera, la BD solo se consula una vez para cada dato
 
-async function getSemestersDBorFake() {
+/**
+ * Obtiene los semestres, o bien de la BD, o bien de la constante `data`.
+ * Solo incluye los datos mínimos de los semestres para generar las cards.
+ * No incluye todos los datos de los semestres.
+ */
+async function getSemesters_DBorFake() {
     if (!data.semesters) {
         // Si todavía no existen los semestres en la constante `data`, se
         // obtienen de la BD.
@@ -50,7 +55,58 @@ async function getSemestersDBorFake() {
     return data.semesters;
 }
 
+async function getSemesterById_DBorFake(id) {
+    // Nos aseguramos que la constante `data` tiene el array `semesters`
+    // Si no lo tiene, se crea vacío.
+    data.semesters = data.semesters || [];
 
+    // Intentamos encontrar el semestre en la constante `data`
+    // Y asegurarnos que tiene todos los datos que necesitamos.
+    let semester = data.semesters.find(sem => sem.id === id);
+
+    // Si el semestre no existe en la constante `data`, o bien le faltan algunos
+    // datos, se obtiene de la BD.
+    if (!semester) {
+        semester = await getSemesterByIdDB(id);
+        data.semesters.push(semester);
+
+    } else if (!semester.year) {
+        semester = await getSemesterByIdDB(id);
+        // Si el semestre no tiene el año, es que le faltan datos, así que se
+        // actualiza con los datos de la BD.
+        const index = data.semesters.findIndex(sem => sem.id === id);
+        data.semesters[index] = semester;
+    }
+
+    return semester;
+}
+
+async function getSubjectsBySemesterId_DBorFake(semId) {
+    // Obtenemos el semestre, que estará en `data` o en la BD
+    // No nos preocupa, porque la función `getSemesterById_DBorFake` se encarga
+    // de saberlo.
+    const semester = await getSemesterById_DBorFake(semId);
+
+    // Si todavía no se han cargado las asignatura, las sacamos de la BD
+    if (!semester.subjects) {
+        semester.subjects = await getSubjectsBySemesterIdDB(semId);
+    }
+
+    return semester.subjects;
+}
+
+async function getSubjectById_DBorFake(id) {
+    const subject = data.semesters
+        .map(sem => sem.subjects)
+        .flat()
+        .find(subj => subj.id === id);
+
+    if (!subject.difficulty === undefined) {
+        subject = await getSubjectByIdDB(id);
+    }
+
+    return subject;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +142,7 @@ async function createData(info) {
     if (info.subj) {
         console.log('Creating subject', info.subj);
 
-        const sem = await getSemesterById(info.subj.semId);
+        const sem = await getSemesterById_DBorFake(info.subj.semId);
 
         // Obtener el id nuevo de la asignatura, usando reduce para obtener el
         // id más alto de todas las asignaturas de todos los semestres
@@ -103,13 +159,13 @@ async function createData(info) {
 }
 
 
-/**
- * Obtiene un semestre por su id.
- */
-async function getSemesterById(id) {
-    id = String(id);
-    return data.semesters.find(sem => sem.id === id);
-}
+// /**
+//  * Obtiene un semestre por su id.
+//  */
+// async function getSemesterById(id) {
+//     id = String(id);
+//     return data.semesters.find(sem => sem.id === id);
+// }
 
 /**
  * Actualiza un semestre
@@ -120,7 +176,7 @@ async function updateSemester(sem) {
     // Cast to number
     sem.year = Number(sem.year);
 
-    const semOld = await getSemesterById(sem.id);
+    const semOld = await getSemesterById_DBorFake(sem.id);
 
     if (semOld) {
         semOld.name = sem.name;
@@ -137,18 +193,18 @@ async function updateSemester(sem) {
     }
 }
 
-/**
- * Obtiene una asignatura por su id.
- * Recorre los semestres, obtiene sus asignaturas y las junta en un array.
- * Luego busca la asignatura por su id en ese array.
- */
-async function getSubjectById(id) {
-    id = String(id);
-    return data.semesters
-        .map(sem => sem.subjects)
-        .flat()
-        .find(subj => subj.id === id);
-}
+// /**
+//  * Obtiene una asignatura por su id.
+//  * Recorre los semestres, obtiene sus asignaturas y las junta en un array.
+//  * Luego busca la asignatura por su id en ese array.
+//  */
+// async function getSubjectById(id) {
+//     id = String(id);
+//     return data.semesters
+//         .map(sem => sem.subjects)
+//         .flat()
+//         .find(subj => subj.id === id);
+// }
 
 /**
  * Actualiza el estado de una asignatura.
@@ -161,7 +217,7 @@ async function updateSubjectStatus(id, status) {
     id = String(id);
     status = Number(status);
 
-    const subj = await getSubjectById(id);
+    const subj = await getSubjectById_DBorFake(id);
     if (subj) {
         subj.status = status;
 
@@ -178,7 +234,7 @@ async function updateSubject(subj) {
     subj.id = String(subj.id);
     subj.status = Number(subj.status);
 
-    const subjOld = await getSubjectById(subj.id);
+    const subjOld = await getSubjectById_DBorFake(subj.id);
 
     if (subjOld) {
         subjOld.name = subj.name;
@@ -228,7 +284,7 @@ async function deleteData(info) {
  */
 async function deleteSem(id) {
 
-    const sem = await getSemesterById(id);
+    const sem = await getSemesterById_DBorFake(id);
 
     if (sem) {
         const thingName = document.getElementById("toDeleteName");
@@ -245,7 +301,7 @@ async function deleteSem(id) {
  */
 async function deleteSubject(id) {
 
-    const subj = await getSubjectById(id);
+    const subj = await getSubjectById_DBorFake(id);
 
     if (subj) {
         const thingName = document.getElementById("toDeleteName");
@@ -272,7 +328,7 @@ async function deleteConfirmed() {
     } else if (what === "subject") {
         await deleteData({ subjId: id });
         const semId = semesterPage.dataset.id;
-        const sem = await getSemesterById(semId);
+        const sem = await getSemesterById_DBorFake(semId);
         refreshSubjects(sem);
     }
 }
@@ -435,7 +491,7 @@ async function handleSubjectForm(ev, form) {
         await createData({ subj });
     }
 
-    const sem = await getSemesterById(subj.semId);
+    const sem = await getSemesterById_DBorFake(subj.semId);
     refreshSubjects(sem);
     return false;
 }
@@ -580,7 +636,7 @@ function goSemsList() {
  */
 async function refreshSemesters() {
 
-    semesters = await getSemestersDBorFake();
+    const semesters = await getSemesters_DBorFake();
 
     semestersList.innerHTML = '';
     semesters.forEach(sem => {
@@ -599,7 +655,7 @@ async function openSem(id) {
     console.log('Opening sem', id);
 
     hideMe(dashboardHeader, semestersList);
-    const sem = await getSemesterById(id);
+    const sem = await getSemesterById_DBorFake(id);
     semesterPage.dataset.id = id;
     refreshSubjects(sem);
     showMe(semHeader, semesterPage);
@@ -610,7 +666,7 @@ async function openSemForm(id = null) {
     if (id) {
         // Si existe un id, estamos editando un semestre existente
         semModalTitle.innerHTML = 'Editar semestre';
-        const sem = await getSemesterById(id);
+        const sem = await getSemesterById_DBorFake(id);
 
         semFormFields.id.value = id;
         semFormFields.name.value = sem.name;
@@ -695,7 +751,7 @@ async function openSubjectForm(status, id = null) {
         id = String(id);
         // Si existe un id, estamos editando una asignatura existente
         subjModalTitle.innerHTML = 'Editar asignatura';
-        const subj = await getSubjectById(id);
+        const subj = await getSubjectById_DBorFake(id);
 
         subjFormFields.status.value = subj.status;
         subjFormFields.id.value = id;
@@ -781,7 +837,6 @@ const zones = [pendientesZone, empezadasColumn, aprobadasColumn,
 */
 async function init() {
     applyListeners();
-    console.log(data.semesters)
     refreshSemesters();
 }
 ////////////////////////////////////////////////////////////////////////////////
