@@ -34,7 +34,7 @@ await server.start();
 // Routes
 app.use(express.static('public'));  // Serves the static files
 dbConnection();
-app.use('/db', cors(), express.json(), expressMiddleware(server));
+app.use('/db', cors(), express.json(), expressMiddleware(server)); // DB endpoint
 
 // Server startup
 await new Promise(resolve => httpServer.listen({ port: PORT }, resolve));
