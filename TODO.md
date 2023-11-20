@@ -3,11 +3,6 @@
 ## BACKLOG #####################################################################
 * Control de errores en frontend:
     * Actualmente, es posible que un usuario borre un semestre (y todas sus asignaturas) mientras otro está dentro del semestre. Si no se capturan los errores, la actualización de asignaturas se hará sobre objetos que ya no existen.
-* Control de errores en fetch
-    * Poner un try-catch en el fetch y un mensaje de aviso.
-    * El catch devolverà null,
-    * Comprobar en cada llamada al fetch si el resultado es null, y si lo es, devolver un objecto o array vacío (según lo que se espere).
-
 
 
 
@@ -62,3 +57,7 @@
     * Usando la librería graphql-scalars, se puede usar DateTime como un tipo de dato de graphql.
     * En el frontend, recortar los 10 primeros caracteres
 * El tipo de semestre usa la palabra `kind` en vez de `type`, para evitar confusiones. Había un error en eso.
+* Control de errores en fetch
+    * Poner un try-catch en el fetch y un mensaje de aviso.
+    * El catch devolverà null,
+    * Comprobar en cada llamada al fetch si el resultado es null, y si lo es, devolver un objecto o array vacío (según lo que se espere).
